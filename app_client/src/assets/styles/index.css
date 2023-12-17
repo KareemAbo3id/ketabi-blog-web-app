@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Tawuniya';
+  font-display: fallback;
+  src: local('Tawuniya'), url(../fonts/Tawuniya.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Tawuniya-Medium';
+  font-display: fallback;
+  src: local('Tawuniya-Medium'),
+    url(../fonts/Tawuniya-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Tawuniya-Bold';
+  font-display: fallback;
+  src: local('Tawuniya-Bold'),
+    url(../fonts/Tawuniya-Bold.ttf) format('truetype');
+}
+
+* {
+  font-family: 'Tawuniya' !important;
+}
+
+.fw-m {
+  font-family: 'Tawuniya-Medium' !important;
+}
+
+.fw-b {
+  font-family: 'Tawuniya-Bold' !important;
+}
