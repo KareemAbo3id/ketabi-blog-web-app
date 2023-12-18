@@ -1,14 +1,14 @@
-import {  Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Avatar } from "@mui/material/Avatar";
-import { Box } from "@mui/material/Box";
-import { IconButton } from "@mui/material/IconButton";
-import { Menu } from "@mui/material/Menu";
-import { MenuItem } from "@mui/material/MenuItem";
-import { Tooltip } from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
 
 const settings = ["Dashboard", "Profile", "Logout"];
 
