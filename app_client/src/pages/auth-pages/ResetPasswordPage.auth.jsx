@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import {
     Alert,
@@ -33,7 +32,7 @@ function ResetPasswordPage() {
     };
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="sm">
             <Alert variant="standard" severity="error">
                 This is an error alert — check it out!
             </Alert>

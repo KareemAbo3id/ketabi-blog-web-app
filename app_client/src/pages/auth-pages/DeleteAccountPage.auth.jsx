@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
     Alert,
     Box,
@@ -12,27 +10,29 @@ import {
     InputAdornment,
     InputLabel,
     OutlinedInput,
+    Typography,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import AuthTitle from "../../components/ui/AuthTitle.ui";
 import AuthBox from "../../components/ui/AuthBox.ui";
 import getRouterPath from "../../hooks/getRouterPath.hook";
 
-function SigninPage() {
+function DeleteAccountPage() {
     const { auth } = getRouterPath();
 
     // user view: password:
     const [viewPassword, setViewPassword] = useState(false);
     const handleViewPassword = () => setViewPassword((view) => !view);
 
-    //TODO: add user candidates: userEmail, userPassword states
+    //TODO: add userPassword state
 
-    // handle login user:
-    const handleLoginUser = (event) => {
+    // handle reset password:
+    const handleDeleteAccount = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-
         if (!data.get("email") || !data.get("password")) {
-            console.error("error: Please fill up the fields");
+            console.log("error");
         } else {
             console.log({
                 email: data.get("email"),
@@ -48,40 +48,25 @@ function SigninPage() {
             </Alert>
             <AuthBox>
                 <AuthTitle
-                    title="Sign in"
-                    description="Welcome back to your Creative space!"
+                    title="Delete your account"
+                    titleColor="error"
+                    description="Warning! this action is permanent, your account will be permanently deleted with all of your data and posts."
                 />
                 <Box
-                    component="form"
-                    action="http://localhost:5000/test"
                     mt={2.5}
-                    gap={2.5}
+                    gap={2}
                     width="100%"
                     display="flex"
                     flexDirection="column"
                     justifyContent="stretch"
                     alignItems="start"
-                    onSubmit={handleLoginUser}
+                    component="form"
+                    onSubmit={handleDeleteAccount}
                     noValidate
                 >
-                    {/* EMAIL INPUT ============================================== */}
-                    <FormControl
-                        fullWidth
-                        required
-                        variant="outlined"
-                        error={false}
-                    >
-                        <InputLabel htmlFor="email">Email Address</InputLabel>
-                        <OutlinedInput
-                            placeholder="example@example.com"
-                            type="email"
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                    </FormControl>
+                    <Typography component="p" variant="body1" className="fw-b">
+                        Type your password to confirm deletion
+                    </Typography>
                     {/* PASSWORD INPUT ============================================== */}
                     <FormControl
                         fullWidth
@@ -115,46 +100,42 @@ function SigninPage() {
                             }
                         />
                     </FormControl>
-                    {/* RESET PASSWORD ============================================== */}
-                    <Link to={auth.resetPassword_path} tabIndex={-1}>
-                        <Button
-                            variant="text"
-                            color="info"
-                            sx={{ textTransform: "capitalize", p: 0 }}
-                        >
-                            Forgot password?
-                        </Button>
-                    </Link>
+
                     {/* SUBMIT BUTTON ============================================== */}
                     <Button
                         type="submit"
                         fullWidth
                         size="large"
+                        color="error"
                         className="fw-b"
                         variant="contained"
-                        // disabled
+                        disabled
                         disableElevation
                         sx={{ py: 1.5 }}
                     >
-                        Sign In
+                        I understand, Delete my account
                     </Button>
+                    <Link
+                        to={auth.signin_path}
+                        tabIndex={-1}
+                        style={{ width: "100%" }}
+                    >
+                        <Button
+                            disableElevation
+                            fullWidth
+                            color="secondary"
+                            sx={{ textTransform: "capitalize" }}
+                            variant="text"
+                        >
+                            Back
+                        </Button>
+                    </Link>
                 </Box>
             </AuthBox>
 
             {/* SIGNUP BUTTON ============================================== */}
-            <Link to={auth.signup_path} tabIndex={-1}>
-                <Button
-                    disableElevation
-                    fullWidth
-                    className="fw-b"
-                    sx={{ mt: 3, py: 1.5, textTransform: "capitalize" }}
-                    variant="text"
-                >
-                    New to Ketabi? Join now
-                </Button>
-            </Link>
         </Container>
     );
 }
 
-export default SigninPage;
+export default DeleteAccountPage;

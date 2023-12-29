@@ -8,6 +8,7 @@ import VerifyEmailPage from "./pages/auth-pages/VerifyEmailPage.auth";
 import BrowserRouterProvider from "./providers/BrowserRouterProvider.provider";
 import ResetPasswordPage from "./pages/auth-pages/ResetPasswordPage.auth";
 import getRouterPath from "./hooks/getRouterPath.hook";
+import DeleteAccountPage from "./pages/auth-pages/DeleteAccountPage.auth";
 
 function App() {
     const ROUTER_PATH = getRouterPath();
@@ -41,6 +42,11 @@ function App() {
                 id={ROUTER_PATH.auth.resetPassword_path}
                 path={ROUTER_PATH.auth.resetPassword_path}
                 element={<ResetPasswordPage />}
+            />
+            <Route
+                id={ROUTER_PATH.auth.deleteAccount_path}
+                path={ROUTER_PATH.auth.deleteAccount_path}
+                element={<DeleteAccountPage />}
             />
 
             {/* error route ===================================== */}

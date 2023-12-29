@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
-    Alert,
     Box,
     Button,
     Checkbox,
+    CircularProgress,
     Container,
     FormControl,
     FormControlLabel,
@@ -19,9 +19,18 @@ import {
 } from "@mui/material";
 import AuthTitle from "../../components/ui/AuthTitle.ui";
 import AuthBox from "../../components/ui/AuthBox.ui";
+import CustomizedSnackbar from "../../components/ui/CustomizedSnackbar.ui";
 
 function SignupPage() {
     const { auth } = getRouterPath();
+
+    const [userFirstname, setUserFirstname] = useState("");
+    const [userLastname, setUserLastname] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userUsername, setUserUsername] = useState("");
+    const [userPassword, setUserPassword] = useState("");
+    const [userConPassword, setUserConPassword] = useState("");
+    const [userAgreementCheck, setUserAgreementCheck] = useState(false);
 
     // user view: password, confirm password:
     const [viewPassword, setViewPassword] = useState(false);
@@ -29,38 +38,47 @@ function SignupPage() {
     const handleViewPassword = () => setViewPassword((view) => !view);
     const handleViewConPassword = () => setViewConPassword((view) => !view);
 
-    // user agreement Check:
-    const [agreementChecked, setAgreementChecked] = useState(false);
-    const handleAgreementChange = (event) => {
-        setAgreementChecked(event.target.checked);
-    };
-
-    //TODO: add user candidates: userFullname, userEmail, userPassword, userAgreementCheck states
-    const [userFullname, setUserFullname] = useState("");
-    const [userEmail, setUserEmail] = useState("");
-    const [userPassword, setUserPassword] = useState("");
-    const [userConPassword, setUserConPassword] = useState("");
-    const [userAgreementCheck, setUserAgreementCheck] = useState(false);
+    // handle alert snackbar
+    const [isSubmitBtn, setIsSubmitBtn] = useState(false);
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
 
     // handle signup user:
     const handleSignupUser = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        if (!data.get("email") || !data.get("password")) {
-            console.log("error");
+
+        if (
+            userFirstname === "" ||
+            userLastname === "" ||
+            userEmail === "" ||
+            userUsername === "" ||
+            userPassword === "" ||
+            userConPassword === "" ||
+            userAgreementCheck === ""
+        ) {
+            setIsSnackbarOpen(true);
+            setSnackbarMessage("Error, Please fill out the required fields");
         } else {
+            setIsSubmitBtn(!isSubmitBtn);
             console.log({
-                email: data.get("email"),
-                password: data.get("password"),
+                userFirstname,
+                userLastname,
+                userEmail,
+                userUsername,
+                userPassword,
+                userConPassword,
+                userAgreementCheck,
             });
         }
     };
 
     return (
-        <Container maxWidth="xs">
-            <Alert variant="standard" severity="error">
-                This is an error alert — check it out!
-            </Alert>
+        <Container maxWidth="sm">
+            <CustomizedSnackbar
+                message={snackbarMessage}
+                isOpen={isSnackbarOpen}
+                setIsOpen={setIsSnackbarOpen}
+            />
             <AuthBox>
                 <AuthTitle
                     title="Create New Account"
@@ -78,39 +96,94 @@ function SignupPage() {
                     onSubmit={handleSignupUser}
                     noValidate
                 >
-                    {/* FULLNAME INPUT ============================================== */}
-                    <FormControl
-                        size="small"
-                        fullWidth
-                        required
-                        variant="outlined"
-                        error={false}
+                    <Box
+                        gap={2}
+                        width="100%"
+                        display="flex"
+                        flexDirection="row"
+                        justifyContent="stretch"
+                        alignItems="center"
                     >
-                        <InputLabel htmlFor="fullname">Fullname</InputLabel>
-                        <OutlinedInput
-                            placeholder="John Doe"
-                            type="text"
-                            id="fullname"
-                            label="Fullname"
-                            name="fullname"
-                            autoFocus
-                        />
-                    </FormControl>
+                        {/* FIRSTNAME INPUT ============================================== */}
+                        <FormControl
+                            size="small"
+                            fullWidth
+                            required
+                            variant="outlined"
+                        >
+                            <InputLabel htmlFor="firstname">
+                                First name
+                            </InputLabel>
+                            <OutlinedInput
+                                value={userFirstname}
+                                onChange={(e) =>
+                                    setUserFirstname(e.target.value)
+                                }
+                                placeholder="John"
+                                type="text"
+                                id="firstname"
+                                label="Firstname"
+                                name="firstname"
+                                autoFocus
+                            />
+                        </FormControl>
+                        {/* LASTNAME INPUT ============================================== */}
+                        <FormControl
+                            size="small"
+                            fullWidth
+                            required
+                            variant="outlined"
+                        >
+                            <InputLabel htmlFor="lastname">
+                                Last name
+                            </InputLabel>
+                            <OutlinedInput
+                                value={userLastname}
+                                onChange={(e) =>
+                                    setUserLastname(e.target.value)
+                                }
+                                placeholder="Doe"
+                                type="text"
+                                id="lastname"
+                                label="Lastname"
+                                name="lastname"
+                            />
+                        </FormControl>
+                    </Box>
                     {/* EMAIL INPUT ============================================== */}
                     <FormControl
                         fullWidth
                         size="small"
                         required
                         variant="outlined"
-                        error={false}
                     >
                         <InputLabel htmlFor="email">Email Address</InputLabel>
                         <OutlinedInput
+                            value={userEmail}
+                            onChange={(e) => setUserEmail(e.target.value)}
                             placeholder="example@example.com"
                             type="email"
                             id="email"
                             label="Email Address"
                             name="email"
+                        />
+                    </FormControl>
+                    {/* USERNAME INPUT ============================================== */}
+                    <FormControl
+                        size="small"
+                        fullWidth
+                        required
+                        variant="outlined"
+                    >
+                        <InputLabel htmlFor="username">Username</InputLabel>
+                        <OutlinedInput
+                            value={userUsername}
+                            onChange={(e) => setUserUsername(e.target.value)}
+                            placeholder="@johndoe"
+                            type="text"
+                            id="username"
+                            label="Username"
+                            name="username"
                         />
                     </FormControl>
                     {/* PASSWORD INPUT ============================================== */}
@@ -119,10 +192,11 @@ function SignupPage() {
                         size="small"
                         required
                         variant="outlined"
-                        error={false}
                     >
                         <InputLabel htmlFor="password">Password</InputLabel>
                         <OutlinedInput
+                            value={userPassword}
+                            onChange={(e) => setUserPassword(e.target.value)}
                             type={viewPassword ? "text" : "password"}
                             placeholder="xxxxxxxx"
                             id="password"
@@ -152,12 +226,13 @@ function SignupPage() {
                         size="small"
                         required
                         variant="outlined"
-                        error={false}
                     >
                         <InputLabel htmlFor="confirmPassword">
                             Confirm Password
                         </InputLabel>
                         <OutlinedInput
+                            value={userConPassword}
+                            onChange={(e) => setUserConPassword(e.target.value)}
                             type={viewConPassword ? "text" : "password"}
                             placeholder="xxxxxxxx"
                             id="confirmPassword"
@@ -183,8 +258,10 @@ function SignupPage() {
                     </FormControl>
                     {/* AGREEMENT ============================================== */}
                     <FormControlLabel
-                        checked={agreementChecked}
-                        onChange={handleAgreementChange}
+                        checked={userAgreementCheck}
+                        onChange={() =>
+                            setUserAgreementCheck(event.target.checked)
+                        }
                         required
                         control={<Checkbox size="small" />}
                         label={
@@ -204,10 +281,14 @@ function SignupPage() {
                         className="fw-b"
                         variant="contained"
                         disableElevation
-                        disabled={false}
+                        disabled={isSubmitBtn}
                         sx={{ py: 1.5 }}
                     >
-                        Agree & create my account
+                        {isSubmitBtn ? (
+                            <CircularProgress color="primary" size={25} />
+                        ) : (
+                            "Agree & create my account"
+                        )}
                     </Button>
                 </Box>
             </AuthBox>

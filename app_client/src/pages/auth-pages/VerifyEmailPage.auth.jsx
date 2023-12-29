@@ -1,4 +1,3 @@
-
 import { Alert, Box, Button, Container } from "@mui/material";
 import AuthTitle from "../../components/ui/AuthTitle.ui";
 import AuthBox from "../../components/ui/AuthBox.ui";
@@ -7,7 +6,7 @@ function VerifyEmailPage() {
     //TODO: add re-send verification request func
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="sm">
             <Alert variant="standard" severity="error">
                 This is an error alert — check it out!
             </Alert>
