@@ -1,90 +1,38 @@
-//HIGHLIGHT: KETABI NODE EXPRESS SERVER
-
+/* eslint-disable no-undef */
 import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import getRouterPath from "./server-configs/routerPath.config.js";
-import USER_ROUTER from "./server-routes/userRouter.routes.js";
+import getRouterPath from "./server-configs/getRouterPath.config.js";
+import listenToServer from "./server-configs/listenToServer.config.js";
+import globalErrorHandler from "./server-middlewares/error-middlewares/globalErrorHandler.middleware.js";
+import notFoundErrorHandler from "./server-middlewares/error-middlewares/notFoundErrorHandler.middleware.js";
+import {
+    configure_dotenv,
+    configure_json,
+    configure_urlencoded,
+    configure_dbConnect,
+    configure_cookieParser,
+} from "./server-configs/globalServerConfigs.config.js";
+import APP_USER_ROUTER from "./server-routes/user_router.routes.js";
 
-//HIGHLIGHT: APP SERVER CONFIGS
-// eslint-disable-next-line no-undef
+//HIGHLIGHT: APP SERVER CONFIGS:
 const APP_PORT = process.env.SERVER_PORT || 5555;
-dotenv.config();
-const { root } = getRouterPath();
-///================================================
-
-//HIGHLIGHT: APP SERVER INIT
 const APP_SERVER = express();
-APP_SERVER.use(cors());
+configure_dotenv();
+configure_dbConnect();
+configure_json(APP_SERVER);
+configure_urlencoded(APP_SERVER);
+configure_cookieParser(APP_SERVER);
+//****************************************************************
 
-//HIGHLIGHT: APP SERVER LOGIC
+const { root } = getRouterPath();
 
-APP_SERVER.use(root.user_path, USER_ROUTER);
+// USER ROUTER:
+APP_SERVER.use(root.user_path, APP_USER_ROUTER);
 
-APP_SERVER.listen(APP_PORT, () =>
-    console.log(`SERVER: Ketabi app listening on port ${APP_PORT}`)
-);
+// MIDDLEWARES:
+APP_SERVER.use(globalErrorHandler);
+APP_SERVER.use(notFoundErrorHandler);
 
-/* API
-@name: create_user()
-@description: create a new user with credentials.
-@endpoint: POST "/u/auth/sign-up"
-@route: "/u/auth/sign-up"
-@params:
-*/
+// SERVER LISTEN:
+listenToServer(APP_SERVER, APP_PORT);
 
-/* API
-@name: logout_user()
-@description: logout the user and delete token with cookies.
-@endpoint: POST "/u/auth/log-out"
-@route: "/u/auth/log-out"
-@params:
-*/
-
-/* API
-@name: get_user_profile()
-@description: get the authenticated user credentials.
-@endpoint: GET "/u/profile/<uid>"
-@route: "/u/profile/<uid>"
-@params:
-*/
-
-/* API
-@name: update_user_profile()
-@description: update the authenticated user credentials.
-@endpoint: PUT "/u/update-profile"
-@route: "/u/update-profile"
-@params:
-*/
-
-/* API
-@name: reset_user_password()
-@description: reset forgotten user password.
-@endpoint: PUT "/u/auth/checkpoint/reset-password"
-@route: "/u/auth/checkpoint/reset-password"
-@params:
-*/
-
-/* API
-@name: verify_user_email()
-@description: verify user email.
-@endpoint: POST "/u/auth/checkpoint/verify-email"
-@route: "/u/auth/checkpoint/verify-email"
-@params:
-*/
-
-/* API
-@name: delete_user()
-@description: delete user from db.
-@endpoint: DELETE "/u/auth/checkpoint/delete-account"
-@route: "/u/auth/checkpoint/delete-account"
-@params:
-*/
-
-/* server errors
-This server uses the following error codes:
-`400 Bad Request`: The request was malformed or missing required parameters.
-`401 Unauthorized`: The API key provided was invalid or missing.
-`404 Not Found`: The requested resource was not found.
-`500 Internal Server Error`: An unexpected error occurred on the server.
-*/
+//****************************************************************
