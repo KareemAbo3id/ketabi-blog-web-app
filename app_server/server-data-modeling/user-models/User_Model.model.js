@@ -1,26 +1,26 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const User_Schema = mongoose.Schema(
+const db_Schema_UserSchema = mongoose.Schema(
     {
-        firstName: {
+        v_data_firstName: {
             type: String,
             required: true,
             maxLength: 50,
         },
-        lastName: {
+        v_data_lastName: {
             type: String,
             required: true,
             maxLength: 50,
         },
-        emailAddress: {
+        v_data_emailAddress: {
             type: String,
             lowercase: true,
             required: [true, "can't be blank"],
             match: [/\S+@\S+\.\S+/, "is invalid"],
             index: true,
         },
-        username: {
+        v_data_username: {
             type: String,
             lowercase: true,
             unique: true,
@@ -28,21 +28,21 @@ const User_Schema = mongoose.Schema(
             match: [/^[a-zA-Z0-9]+$/, "is invalid"],
             index: true,
         },
-        password: {
+        v_data_password: {
             type: String,
             required: true,
             minLength: 8,
         },
-        agreementConfirmation: {
+        v_data_isAgreementConfirmed: {
             type: Boolean,
             default: false,
             required: true,
         },
-        isEmailVerfied: {
+        v_data_isEmailVerfied: {
             type: Boolean,
             default: false,
         },
-        isAccountActive: {
+        v_data_isAccountActive: {
             type: Boolean,
             default: true,
         },
@@ -51,17 +51,19 @@ const User_Schema = mongoose.Schema(
 );
 
 // Match user entered password to hashed password in database:
-User_Schema.methods.compareSubmittedPasswordWithDB = async function (submittedPassword) {
-    return await bcrypt.compare(submittedPassword, this.password);
+db_Schema_UserSchema.methods.m_compareSubmittedPasswordWithDbPassword = async function (
+    p_submittedPassword
+) {
+    return await bcrypt.compare(p_submittedPassword, this.v_data_password);
 };
 
 // Encrypt password using bcrypt:
-User_Schema.pre("save", async function (next) {
-    if (!this.isModified("password")) next();
-    const saltEnc = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, saltEnc);
+db_Schema_UserSchema.pre("save", async function (next) {
+    if (!this.isModified("v_data_password")) next();
+    const v_saltEnc = await bcrypt.genSalt(10);
+    this.v_data_password = await bcrypt.hash(this.v_data_password, v_saltEnc);
 });
 
-const User_Model = mongoose.model("users_col", User_Schema);
+const db_model_UserModel = mongoose.model("users_col", db_Schema_UserSchema);
 
-export default User_Model;
+export default db_model_UserModel;

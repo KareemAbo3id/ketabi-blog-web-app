@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
-import User_Model from "../../server-data-modeling/user-models/User_Model.model.js";
+import db_model_UserModel from "../../server-data-modeling/user-models/User_Model.model.js";
 
 /**
  * Update User Profile
@@ -11,33 +11,29 @@ import User_Model from "../../server-data-modeling/user-models/User_Model.model.
  * @access private
  */
 
-const update_user_profile = asyncHandler(async (req, res) => {
+const api_f_updateUserProfile = asyncHandler(async (req, res) => {
     // get the user credentials from DB:
-    const userCredentials = await User_Model.findById(req.userCredentials._id);
-
-    console.log(userCredentials);
+    const v_db_userCredentials = await db_model_UserModel.findById(req.v_db_userCredentials._id);
 
     // UPDATE USER DATA:
     // check if user credentials are true (retrieved) and assign submitted user credentials to DB credentials:
-    if (userCredentials) {
+    if (v_db_userCredentials) {
         // assign user credentials to existed ones:
-        userCredentials.firstName = req.body.firstName || userCredentials.firstName;
-        userCredentials.lastName = req.body.lastName || userCredentials.lastName;
-        userCredentials.emailAddress = req.body.emailAddress || userCredentials.emailAddress;
+        v_db_userCredentials.v_data_firstName =
+            req.body.v_data_firstName || v_db_userCredentials.v_data_firstName;
 
-        //TODO: make a controller for update password with old pass and new pass with confirm
+        v_db_userCredentials.v_data_lastName =
+            req.body.v_data_lastName || v_db_userCredentials.v_data_lastName;
+
+        v_db_userCredentials.v_data_emailAddress =
+            req.body.v_data_emailAddress || v_db_userCredentials.v_data_emailAddress;
 
         // save the update:
-        const updatedUserCredentials = await userCredentials.save();
+        await v_db_userCredentials.save();
 
         // the result:
         res.status(StatusCodes.CREATED).json({
-            updated: {
-                _id: updatedUserCredentials._id,
-                firstName: updatedUserCredentials.firstName,
-                lastName: updatedUserCredentials.lastName,
-                emailAddress: updatedUserCredentials.emailAddress,
-            },
+            msg: "your account has been updated",
         });
     }
 
@@ -48,4 +44,4 @@ const update_user_profile = asyncHandler(async (req, res) => {
     }
 });
 
-export default update_user_profile;
+export default api_f_updateUserProfile;

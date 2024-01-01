@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
-import User_Model from "../../server-data-modeling/user-models/User_Model.model.js";
 import { StatusCodes } from "http-status-codes";
-import generateJwtAndSaveInHttpCookie from "../../server-utilities/jwt/generateJwtToken.utility.js";
+import db_model_UserModel from "../../server-data-modeling/user-models/User_Model.model.js";
+import f_generateJwtAndSaveInHttpCookie from "../../server-utilities/jwt/generateJwtToken.utility.js";
 
 /**
  * Create User
@@ -13,63 +13,66 @@ import generateJwtAndSaveInHttpCookie from "../../server-utilities/jwt/generateJ
  * @method POST
  */
 
-const create_user = asyncHandler(async (req, res) => {
+const api_f_createUser = asyncHandler(async (req, res) => {
     // get the params from client request:
     const {
-        firstName,
-        lastName,
-        username,
-        emailAddress,
-        password,
-        agreementConfirmation,
-        // temp:
-        isEmailVerfied,
+        v_data_firstName,
+        v_data_lastName,
+        v_data_username,
+        v_data_emailAddress,
+        v_data_password,
+        v_data_isAgreementConfirmed,
+        v_data_isEmailVerfied,
+        v_data_isAccountActive,
     } = req.body;
 
     // get the user credentials from DB:
-    const userCredentials_email = await User_Model.findOne({ emailAddress });
-    const userCredentials_username = await User_Model.findOne({ username });
+    const v_db_userEmailAddress = await db_model_UserModel.findOne({ v_data_emailAddress });
+    const v_db_userUsername = await db_model_UserModel.findOne({ v_data_username });
 
     // if the entered credentials has been already exists throw an error:
-    if (userCredentials_username) {
+    if (v_db_userUsername) {
         res.status(StatusCodes.BAD_REQUEST);
-        throw new Error(`The user @${username} is already exists, try again`);
+        throw new Error(`The user @${v_data_username} is already exists, try again`);
     }
 
-    if (userCredentials_email) {
+    if (v_db_userEmailAddress) {
         res.status(StatusCodes.BAD_REQUEST);
-        throw new Error(`The @${emailAddress} is already signed up, try another email`);
+        throw new Error(`The @${v_data_emailAddress} is already signed up, try another email`);
     }
 
     // CREATE NEW USER:
     // if the entered credentials in not exists (new credentials):
     // send user credentials to DB to create a new user:
-    const userPayload = await User_Model.create({
-        firstName,
-        lastName,
-        emailAddress,
-        username,
-        password,
-        agreementConfirmation,
-        isEmailVerfied,
-        isAccountActive,
+    const v_userPayload = await db_model_UserModel.create({
+        v_data_firstName,
+        v_data_lastName,
+        v_data_emailAddress,
+        v_data_username,
+        v_data_password,
+        v_data_isAgreementConfirmed,
+        v_data_isEmailVerfied,
+        v_data_isAccountActive,
     });
 
     // check if new user has been created:
-    if (userPayload) {
+    if (v_userPayload) {
         // generate JWT and save it in http-cookie:
-        generateJwtAndSaveInHttpCookie(process.env.JWT_NAME, res, userPayload);
+        f_generateJwtAndSaveInHttpCookie(process.env.V_JWT_NAME, res, v_userPayload);
 
         // the result:
         res.status(StatusCodes.CREATED).json({
-            _id: userPayload._id,
-            firstName: userPayload.firstName,
-            lastName: userPayload.lastName,
-            emailAddress: userPayload.emailAddress,
-            username: userPayload.username,
-            agreementConfirmation: userPayload.agreementConfirmation,
-            isEmailVerfied: userPayload.isEmailVerfied,
-            isAccountActive: userPayload.isAccountActive,
+            data: {
+                _id: v_userPayload._id,
+                v_data_firstName: v_userPayload.v_data_firstName,
+                v_data_lastName: v_userPayload.v_data_lastName,
+                v_data_emailAddress: v_userPayload.v_data_emailAddress,
+                v_data_username: v_userPayload.v_data_username,
+                v_data_isAgreementConfirmed: v_userPayload.v_data_isAgreementConfirmed,
+                v_data_isEmailVerfied: v_userPayload.v_data_isEmailVerfied,
+                v_data_isAccountActive: v_userPayload.v_data_isAccountActive,
+            },
+            message: "user account created",
         });
     }
 
@@ -80,4 +83,4 @@ const create_user = asyncHandler(async (req, res) => {
     }
 });
 
-export default create_user;
+export default api_f_createUser;

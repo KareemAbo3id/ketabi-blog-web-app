@@ -1,18 +1,18 @@
 /**
  * Listen for connections of a running express server on a specfic port
- * @param {Function} app_server
- * @param {Number} app_port (default 80)
+ * @param {Function} p_app_server
+ * @param {Number} p_app_port (default 80)
  * @returns {http.Server} http.Server
  */
 
-function listenToServer(app_server, app_port = 80) {
-    app_server.listen(app_port, () => {
+function f_listenToServer(p_app_server, p_app_port = 80) {
+    p_app_server.listen(p_app_port, () => {
         try {
-            console.log(`✅ server updated on port: ${app_port}`);
+            console.log(`\n✅ server updated on port: ${p_app_port}`);
         } catch (error) {
-            console.error(`❌ server error: ${error.message}`);
+            console.error(`\n❌ server error: ${error.message}`);
         }
     });
 }
 
-export default listenToServer;
+export default f_listenToServer;

@@ -8,16 +8,16 @@ import { StatusCodes } from "http-status-codes";
  * @returns {String} {error_status_code, error_message}
  */
 
-function notFoundErrorHandler(req, res, next) {
-    let errStatusCode = StatusCodes.NOT_FOUND;
-    const errMessage = `Route Not Found: '${req.originalUrl}' Type the correct route path.`;
+function f_notFoundErrorHandler(req, res, next) {
+    let v_errStatusCode = StatusCodes.NOT_FOUND;
+    const v_errMessage = `Route Not Found: '${req.originalUrl}' Type the correct route path.`;
 
-    res.status(errStatusCode).json({
-        error_status_code: errStatusCode,
-        error_message: errMessage,
+    res.status(v_errStatusCode).json({
+        error_status_code: v_errStatusCode,
+        error_message: v_errMessage,
     });
 
     next();
 }
 
-export default notFoundErrorHandler;
+export default f_notFoundErrorHandler;

@@ -1,4 +1,4 @@
-function getRouterPath() {
+function f_getRouterPath() {
     const error = { path: "*" };
 
     const root = {
@@ -18,11 +18,13 @@ function getRouterPath() {
         signup_path: `${root.auth_path}/sign-up`,
         verifyEmail_path: `${root.auth_path}/checkpoint/verify-email`,
         resetPassword_path: `${root.auth_path}/checkpoint/reset-password`,
-        deleteAccount_path: `${root.auth_path}/checkpoint/delete-account`,
+        updatePassword_path: `${root.auth_path}/checkpoint/update-password`,
+        deactivateAccount_path: `${root.auth_path}/checkpoint/deactivate-account`,
+        reactivateAccount_path: `${root.auth_path}/checkpoint/reactivate-account`,
     };
 
     //
     return { auth, user, root, error };
 }
 
-export default getRouterPath;
+export default f_getRouterPath;

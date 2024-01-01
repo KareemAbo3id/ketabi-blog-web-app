@@ -2,32 +2,34 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import connectMongoDB from "./connectMongoDB.config.js";
+import f_connectMongoDB from "./connectMongoDB.config.js";
 
-const configure_dotenv = () => {
+const f_configure_dotenv = () => {
     dotenv.config();
 };
 
-const configure_dbConnect = () => {
-    connectMongoDB(process.env.MONGODB_URI);
+const f_configure_dbConnect = () => {
+    process.env.V_NODE_ENV === "development"
+        ? f_connectMongoDB(process.env.V_TEST_MONGODB_URI)
+        : f_connectMongoDB(process.env.V_REAL_MONGODB_URI);
 };
 
-const configure_json = (server) => {
-    server.use(express.json());
+const f_configure_json = (p_server) => {
+    p_server.use(express.json());
 };
 
-const configure_urlencoded = (server) => {
-    server.use(express.urlencoded({ extended: true }));
+const f_configure_urlencoded = (p_server) => {
+    p_server.use(express.urlencoded({ extended: true }));
 };
 
-const configure_cookieParser = (server) => {
-    server.use(cookieParser());
+const f_configure_cookieParser = (p_server) => {
+    p_server.use(cookieParser());
 };
 
 export {
-    configure_dotenv,
-    configure_dbConnect,
-    configure_json,
-    configure_urlencoded,
-    configure_cookieParser,
+    f_configure_dotenv,
+    f_configure_dbConnect,
+    f_configure_json,
+    f_configure_urlencoded,
+    f_configure_cookieParser,
 };

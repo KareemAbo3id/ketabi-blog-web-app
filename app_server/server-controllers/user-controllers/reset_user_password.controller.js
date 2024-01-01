@@ -9,8 +9,8 @@ import asyncHandler from "express-async-handler";
  * @access public
  */
 
-const reset_user_password = asyncHandler(async (req, res) => {
+const api_f_resetUserPassword = asyncHandler(async (req, res) => {
     res.status(200).json({ msg: "reset_user_password test" });
 });
 
-export default reset_user_password;
+export default api_f_resetUserPassword;

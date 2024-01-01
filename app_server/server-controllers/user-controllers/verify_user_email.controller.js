@@ -9,8 +9,8 @@ import asyncHandler from "express-async-handler";
  * @access private
  */
 
-const verify_user_email = asyncHandler(async (req, res) => {
+const api_f_verifyUserEmail = asyncHandler(async (req, res) => {
     res.status(200).json({ msg: "verify_user_email test" });
 });
 
-export default verify_user_email;
+export default api_f_verifyUserEmail;

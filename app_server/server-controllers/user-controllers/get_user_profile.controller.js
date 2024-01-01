@@ -10,20 +10,21 @@ import { StatusCodes } from "http-status-codes";
  * @access private
  */
 
-const get_user_profile = asyncHandler(async (req, res) => {
+const api_f_getUserProfile = asyncHandler(async (req, res) => {
     // get the params from client request:
-    const loggedInUserCredentials = {
-        _id: req.userCredentials._id,
-        firstName: req.userCredentials.firstName,
-        lastName: req.userCredentials.lastName,
-        emailAddress: req.userCredentials.emailAddress,
-        username: req.userCredentials.username,
-        isEmailVerfied: req.userCredentials.isEmailVerfied,
+    const v_loggedInUserCredentials = {
+        _id: req.v_db_userCredentials._id,
+        v_data_firstName: req.v_db_userCredentials.v_data_firstName,
+        v_data_lastName: req.v_db_userCredentials.v_data_lastName,
+        v_data_emailAddress: req.v_db_userCredentials.v_data_emailAddress,
+        v_data_username: req.v_db_userCredentials.v_data_username,
+        v_data_isEmailVerfied: req.v_db_userCredentials.v_data_isEmailVerfied,
+        v_data_isAccountActive: req.v_db_userCredentials.v_data_isAccountActive,
     };
 
     //TODO: make the logic of retrieving data
 
-    res.status(StatusCodes.CREATED).json({ profile: loggedInUserCredentials });
+    res.status(StatusCodes.CREATED).json({ profile: v_loggedInUserCredentials });
 });
 
-export default get_user_profile;
+export default api_f_getUserProfile;
