@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const db_Schema_UserSchema = mongoose.Schema(
+const MON_SCHEMA_USER = mongoose.Schema(
     {
         v_data_firstName: {
             type: String,
@@ -51,19 +51,17 @@ const db_Schema_UserSchema = mongoose.Schema(
 );
 
 // Match user entered password to hashed password in database:
-db_Schema_UserSchema.methods.m_compareSubmittedPasswordWithDbPassword = async function (
-    p_submittedPassword
-) {
-    return await bcrypt.compare(p_submittedPassword, this.v_data_password);
+MON_SCHEMA_USER.methods.M_IS_PASSWORD_MATCH_WITH = async function (p_submitted_password) {
+    return await bcrypt.compare(p_submitted_password, this.v_data_password);
 };
 
 // Encrypt password using bcrypt:
-db_Schema_UserSchema.pre("save", async function (next) {
+MON_SCHEMA_USER.pre("save", async function (next) {
     if (!this.isModified("v_data_password")) next();
     const v_saltEnc = await bcrypt.genSalt(10);
     this.v_data_password = await bcrypt.hash(this.v_data_password, v_saltEnc);
 });
 
-const db_model_UserModel = mongoose.model("users_col", db_Schema_UserSchema);
+const MON_MODEL_USER = mongoose.model("users_col", MON_SCHEMA_USER);
 
-export default db_model_UserModel;
+export default MON_MODEL_USER;

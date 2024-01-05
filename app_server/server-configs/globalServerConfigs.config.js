@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import f_connectMongoDB from "./connectMongoDB.config.js";
 
@@ -12,6 +13,10 @@ const f_configure_dbConnect = () => {
     process.env.V_NODE_ENV === "development"
         ? f_connectMongoDB(process.env.V_TEST_MONGODB_URI)
         : f_connectMongoDB(process.env.V_REAL_MONGODB_URI);
+};
+
+const f_configure_cors = (p_server) => {
+    p_server.use(cors());
 };
 
 const f_configure_json = (p_server) => {
@@ -28,6 +33,7 @@ const f_configure_cookieParser = (p_server) => {
 
 export {
     f_configure_dotenv,
+    f_configure_cors,
     f_configure_dbConnect,
     f_configure_json,
     f_configure_urlencoded,

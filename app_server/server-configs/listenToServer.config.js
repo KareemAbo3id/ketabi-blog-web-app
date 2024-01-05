@@ -5,7 +5,7 @@
  * @returns {http.Server} http.Server
  */
 
-function f_listenToServer(p_app_server, p_app_port = 80) {
+function f_configure_listenToServer(p_app_server, p_app_port = 80) {
     p_app_server.listen(p_app_port, () => {
         try {
             console.log(`\n✅ server updated on port: ${p_app_port}`);
@@ -15,4 +15,4 @@ function f_listenToServer(p_app_server, p_app_port = 80) {
     });
 }
 
-export default f_listenToServer;
+export default f_configure_listenToServer;

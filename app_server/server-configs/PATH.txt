@@ -1,0 +1,12 @@
+file                         fun                         path
+✅get_profile.api            F_API_GET_PROFILE           /user/profile/:uid
+✅update_profile.api         F_API_UPDATE_PROFILE        /user/update-profile/:uid
+✅update_password.api        F_API_UPDATE_PASSWORD       /user/update-password/:uid
+✅sign_in.api                F_API_SIGN_IN               /user/auth/sign-in
+✅sign_out.api               F_API_SIGN_OUT              /user/auth/sign-out
+✅sign_up.api                F_API_SIGN_UP               /user/auth/sign-up
+✅reset_password.api         F_API_RESET_PASSWORD        /user/auth/reset-password
+✅verify_email_address.api   F_API_VERIFY_EMAIL_ADDRESS  /user/checkpoint/verify-email-address
+✅deactivate_account.api     F_API_DEACTIVATE_ACCOUNT    /user/checkpoint/deactivate-account/:uid
+✅reactivate_account.api     F_API_REACTIVATE_ACCOUNT    /user/checkpoint/reactivate-account/:uid
+✅error_404.api              F_API_ERROR_404             /*

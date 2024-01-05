@@ -1,0 +1,5 @@
+- TODO make the validation on client's forms
+- TODO update the `F_GET_ROUTER_PATH` fn file in client as it is in server
+- TODO refactor all api fns and its docs and file names
+- FIXME all server utilities functions
+- FIXME change the "is" var to "_FLAG"

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { StatusCodes } from "http-status-codes";
 
 /**
