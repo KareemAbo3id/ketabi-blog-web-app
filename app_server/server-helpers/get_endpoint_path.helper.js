@@ -1,6 +1,6 @@
 /**
  * ### Get Endpoint Path Function
- * get an endpoint router link from well organized links object
+ * get an endpoint router link from well organized links object.
  * ```
  * const { AuthPath } = f_get_endpoint_path();
  * AuthPath.SignIn;
@@ -81,7 +81,14 @@ function f_get_endpoint_path() {
     /**
      * @link /auth/reset-password
      */
-    ResetPassword: `${AppPath.AUTH}/reset-password`,
+    ResetPassword: `${AppPath.AUTH}/forget-password`,
+
+    /**
+     * @link /auth/reset-password
+     * @param {string} userId
+     * @param {string} tokenExtension
+     */
+    ResetPasswordLink: `${AppPath.AUTH}/reset-password/_id`,
   };
 
   const CheckpointPath = {

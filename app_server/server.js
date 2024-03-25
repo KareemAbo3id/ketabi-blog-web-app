@@ -9,6 +9,8 @@
  * f_ / F_ : function
  * m_ / M_ : method
  * p_ / P_ : parameter
+ * data_ / DATA_ : DB data
+ * model_ / MODEL_ : DB model
  */
 
 import express from "express";

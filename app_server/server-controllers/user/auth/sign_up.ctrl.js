@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../../server-data-models/user/user_data.model.js";
+import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_sign_jwt from "../../../server-services/jwt/sign_jwt.service.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
@@ -77,7 +77,9 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     throw new Error(`Username already exists, please try another username`);
   }
 
-  // create new user:
+  // CREATE USER LOGIC:
+
+  // create new user payload:
   const v_userPayload = await Model_UserData.create({
     DATA_EMAIL_ADDRESS,
     DATA_USERNAME,
@@ -115,6 +117,9 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     response.status(StatusCodes.INTERNAL_SERVER_ERROR);
     throw new Error(`Internal server error, please try again`);
   }
+
+  // console.log test:
+  console.log(v_userPayload);
 });
 
 export default f_control_sign_up;

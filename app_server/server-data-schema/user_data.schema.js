@@ -1,21 +1,18 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
-import f_get_db_structure from "../../server-helpers/get_db_structure.helper.js";
-const { users_collection } = f_get_db_structure();
 
 /**
  * ### The Main User Schema Object
  * @KareemAbo3id
- * @param {String} DATA_EMAIL_ADDRESS emailAddress
- * @param {String} DATA_USERNAME username
- * @param {String} DATA_PASSWORD password
- * @param {String} DATA_FIRSTNAME firstName
- * @param {String} DATA_LASTNAME lastName
- * @param {String} DATA_ADDRESS.COUNTRY country
- * @param {String} DATA_ADDRESS.CITY city
- * @param {Boolean} FLAG_AGREEMENT_CONFIRMED agreementConfirmed
- * @param {Boolean} FLAG_EMAIL_VERFIED emailVerfied
- * @param {Boolean} FLAG_ACCOUNT_ACTIVATED AccountActivated
+ * @param {String} DATA_EMAIL_ADDRESS
+ * @param {String} DATA_USERNAME
+ * @param {String} DATA_PASSWORD
+ * @param {String} DATA_FIRSTNAME
+ * @param {String} DATA_LASTNAME
+ * @param {String} DATA_ADDRESS.COUNTRY
+ * @param {String} DATA_ADDRESS.CITY
+ * @param {Boolean} FLAG_AGREEMENT_CONFIRMED
+ * @param {Boolean} FLAG_EMAIL_VERFIED
+ * @param {Boolean} FLAG_ACCOUNT_ACTIVATED
  */
 const Schema_UserData = mongoose.Schema(
   {
@@ -107,19 +104,4 @@ const Schema_UserData = mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-// Match user entered password to hashed password in database:
-Schema_UserData.methods.m_compare_password = async function (p_typed_password) {
-  return await bcrypt.compare(p_typed_password, this.DATA_PASSWORD);
-};
-
-// Encrypt password using bcrypt:
-Schema_UserData.pre("save", async function (next) {
-  if (!this.isModified("DATA_PASSWORD")) next();
-  const v_saltEnc = await bcrypt.genSalt(10);
-  this.DATA_PASSWORD = await bcrypt.hash(this.DATA_PASSWORD, v_saltEnc);
-});
-
-// define the user data model:
-const Model_UserData = mongoose.model(users_collection, Schema_UserData);
-
-export default Model_UserData;
+export default Schema_UserData;

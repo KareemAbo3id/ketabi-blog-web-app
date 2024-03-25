@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../../server-data-models/user/user_data.model.js";
+import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_delete_httponly_cookie from "../../../server-services/cookies/delete_httponly_cookie.service.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 

@@ -17,11 +17,7 @@ function f_set_reset_password_mail_template(
   const email_html_template = fs
     .readFileSync(`${__dirname}/reset_password_mail.temp.html`, "utf-8")
     .replace(/{%v_temp_firstName%}/g, p_recipient_firstName)
-    .replace(/{%v_temp_reaetPasswordLink%}/g, p_reaetPasswordLink)
-    .replace(
-      /{%v_temp_image%}/g,
-      `${__dirname}/../../server-assets/ketabi_logo.png`
-    );
+    .replace(/{%v_temp_reaetPasswordLink%}/g, p_reaetPasswordLink);
 
   const messageFields = {
     subject: "Password reset request - Ketabi app",

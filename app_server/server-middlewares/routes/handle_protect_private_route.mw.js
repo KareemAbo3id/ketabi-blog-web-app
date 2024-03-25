@@ -2,7 +2,7 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../server-data-models/user/user_data.model.js";
+import Model_UserData from "../../server-data-models/user_data.model.js";
 
 /**
  * ### Protect Private Routers Handler Middleware

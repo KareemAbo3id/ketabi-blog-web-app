@@ -4,13 +4,14 @@ import f_handle_protect_private_route from "../../server-middlewares/routes/hand
 import f_control_sign_in from "../../server-controllers/user/auth/sign_in.ctrl.js";
 import f_control_sign_up from "../../server-controllers/user/auth/sign_up.ctrl.js";
 import f_control_sign_out from "../../server-controllers/user/auth/sign_out.ctrl.js";
-import f_control_reset_password from "../../server-controllers/user/auth/reset_password.ctrl.js";
 import f_control_deactivate_account from "../../server-controllers/user/checkpoint/deactivate_account.ctrl.js";
 import f_control_reactivate_account from "../../server-controllers/user/checkpoint/reactivate_account.ctrl.js";
 import f_control_verify_email_address from "../../server-controllers/user/checkpoint/verify_email_address.ctrl.js";
 import f_control_get_profile from "../../server-controllers/user/get_profile.ctrl.js";
 import f_control_update_password from "../../server-controllers/user/update_password.ctrl.js";
 import f_control_update_profile from "../../server-controllers/user/update_profile.ctrl.js";
+import f_control_forget_password from "../../server-controllers/user/auth/forget_password.ctrl.js";
+import f_control_reset_password_link from "../../server-controllers/user/auth/reset_password.ctrl.js";
 
 const V_USER_ROUTER_GROUP = express.Router(); // create express router
 const { UserPath, AuthPath, CheckpointPath } = f_get_endpoint_path();
@@ -22,7 +23,12 @@ V_USER_ROUTER_GROUP.post(AuthPath.SignUp, f_control_sign_up);
 
 V_USER_ROUTER_GROUP.post(AuthPath.SignOut, f_control_sign_out);
 
-V_USER_ROUTER_GROUP.post(AuthPath.ResetPassword, f_control_reset_password);
+V_USER_ROUTER_GROUP.post(AuthPath.ResetPassword, f_control_forget_password);
+
+V_USER_ROUTER_GROUP.post(
+  AuthPath.ResetPasswordLink,
+  f_control_reset_password_link
+);
 
 // PRIVATE ACCESS ENDPOINTS:
 V_USER_ROUTER_GROUP.patch(
