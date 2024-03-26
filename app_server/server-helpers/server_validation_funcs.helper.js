@@ -1,6 +1,6 @@
 /**
- * @fileoverview This file contains the server validation functions to validate the user credentials.
- * @module server
+ * @fileoverview This file contains the server validation functions
+ * @module server_validation_funcs
  * @KareemAbo3id
  */
 
@@ -29,9 +29,11 @@ const f_validate_email_address = (p_emailAddress) => {
  */
 const f_validate_password = (p_password) => {
   if (
+    // make sure the password is not empty and between 8 and 30 characters
     !p_password ||
     p_password.length < 8 ||
     p_password.length > 30 ||
+    // make sure the password contains at least one lowercase letter, one uppercase letter, and one number
     !p_password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/)
   ) {
     return false;

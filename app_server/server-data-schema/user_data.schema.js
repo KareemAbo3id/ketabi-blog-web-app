@@ -40,7 +40,6 @@ const Schema_UserData = mongoose.Schema(
       type: String,
       required: true,
       maxLength: 30,
-      minLength: 8,
     },
     //
     //

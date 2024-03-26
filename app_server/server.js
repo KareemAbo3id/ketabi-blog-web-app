@@ -1,4 +1,6 @@
 /**
+ * ### ketabi blog web application server
+ * major technologies: Node.js, Express.js, MongoDB, Mongoose, JWT.
  * @fileoverview This file contains the server configuration and setup for the web application.
  * It imports necessary packages and modules, configures the server, sets up routes, and starts the server.
  * @module server
@@ -11,6 +13,16 @@
  * p_ / P_ : parameter
  * data_ / DATA_ : DB data
  * model_ / MODEL_ : DB model
+ *
+ * How is everything connected? explain file structure:
+ * 1. server.js is the main file that runs the server.
+ * 2. server-configs/ contains configurations of db connection, server port, and server listen.
+ * 3. server-controllers/ contains API controllers for the server, divided by user, blog, comment, like, etc.
+ * 4. server-data-models/ contains Mongoose models connected to specific schemas.
+ * 5. server-data-schemas/ contains Mongoose schemas for the models.
+ * 6. server-middlewares/ contains middlewares handlers for the server.
+ * 7. server-routes/ contains the API routes grouped by user, blog, comment, like, etc.
+ * and other helper functions and configurations.
  */
 
 import express from "express";
