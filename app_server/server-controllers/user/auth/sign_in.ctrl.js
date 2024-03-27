@@ -76,6 +76,7 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
     const generatedJWT = jwt.sign(
       {
         _id: v_db_userCredentials._id,
+        DATA_USERNAME: v_db_userCredentials.DATA_USERNAME,
       },
       process.env.V_JWT_SECRET,
       {

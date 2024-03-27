@@ -28,15 +28,16 @@ const f_validate_email_address = (p_emailAddress) => {
  * @returns {Boolean}
  */
 const f_validate_password = (p_password) => {
+  let passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+  let passMin = 8;
+  let passMax = 30;
   if (
-    // make sure the password is not empty and between 8 and 30 characters
-    !p_password ||
-    p_password.length < 8 ||
-    p_password.length > 30 ||
-    // make sure the password contains at least one lowercase letter, one uppercase letter, and one number
-    !p_password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/)
+    p_password.length < passMin ||
+    p_password.length > passMax ||
+    !p_password.match(passRegex) ||
+    !p_password
   ) {
-    return false;
+    return true;
   }
 };
 

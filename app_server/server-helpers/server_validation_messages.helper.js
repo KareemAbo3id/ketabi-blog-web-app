@@ -23,6 +23,8 @@ function f_get_server_validation_messages() {
   const Message_WrongUsername = `Wrong username, please try again`;
   const Message_WrongEmailPassword = `Wrong email or password, please try again`;
   const Message_PasswordsNotMatch = `Passwords do not match, please try again`;
+  const Message_TokenNotValidExpired = `Token is not valid or expired, please try again`;
+  const Message_PasswordsMatch = `New password can't be the same as the old password`;
 
   // already exists messages:
   const Message_EmailExists = `Email address already exists, please try another email address`;
@@ -99,6 +101,18 @@ function f_get_server_validation_messages() {
      * ```
      */
     Message_PasswordsNotMatch,
+    /**
+     * ```
+     * "Token is not valid or expired, please try again"
+     * ```
+     */
+    Message_TokenNotValidExpired,
+    /**
+     * ```
+     * "New password can't be the same as the old password"
+     * ```
+     */
+    Message_PasswordsMatch,
     /**
      * ```
      * "Email address already exists, please try another email address"

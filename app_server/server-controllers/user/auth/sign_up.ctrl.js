@@ -6,6 +6,9 @@ import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
+import f_set_verify_emailaddress_mail_template from "../../../server-templates/verify-email-mail/verify_email_mail.temp.js";
+import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
+import { V_PORT } from "../../../server-configs/set_server_port.cnfg.js";
 import {
   f_check_userCredentials,
   f_validate_email_address,
@@ -53,7 +56,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   }
 
   // check username conditions:
-  if (!f_validate_password(DATA_PASSWORD)) {
+  if (f_validate_password(DATA_PASSWORD)) {
     response.status(StatusCodes.BAD_REQUEST);
     throw new Error(Message_PasswordNotValid);
   }
@@ -106,12 +109,13 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   });
 
   // check if new user has been created:
-  if (v_newUserPayload) {
+  if (await v_newUserPayload) {
     //
-    // generate JWT:
+    // generate JWT make it wait for the user to be created:
     const generatedJWT = jwt.sign(
       {
-        _id: v_db_userCredentials_email._id,
+        _id: v_newUserPayload._id,
+        DATA_USERNAME: v_newUserPayload.DATA_USERNAME,
       },
       process.env.V_JWT_SECRET,
       {
@@ -122,10 +126,40 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     // save JWT in http-cookie:
     f_set_httponly_cookie(response, generatedJWT);
 
+    // send welcome email to the new user, and a link to verify the email:
+
+    // set verification link:
+    const v_verificationLink = `${request.protocol}://${request.hostname}:${V_PORT}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
+
+    console.log(v_verificationLink);
+
+    // set message fields:
+    const { messageFields } = f_set_verify_emailaddress_mail_template(
+      v_newUserPayload.DATA_FIRSTNAME,
+      v_verificationLink
+    );
+
+    // send email to the new user:
+    f_send_transactional_email(
+      {
+        // eslint-disable-next-line no-undef
+        from: process.env.V_EMAIL_SERVER_SENDER,
+        to: DATA_EMAIL_ADDRESS,
+        subject: messageFields.subject,
+        message: messageFields.message,
+        html: messageFields.html,
+      },
+      {
+        failedMessage: `Verification email not sent, please try again`,
+        succeedMessage: `Verification email sent successfully, please check your inbox`,
+      },
+      response
+    );
+
     // the result:
     response.status(StatusCodes.CREATED).json(
       f_set_json_response(Message_UserCreated, {
-        userCredentials: v_db_userCredentials_email,
+        userCredentials: v_newUserPayload,
         token: generatedJWT,
       })
     );

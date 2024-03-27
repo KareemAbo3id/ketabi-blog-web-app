@@ -87,7 +87,6 @@ const Schema_UserData = mongoose.Schema(
     //
     FLAG_EMAIL_VERFIED: {
       type: Boolean,
-
       required: true,
       default: false,
     },
