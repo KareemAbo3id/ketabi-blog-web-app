@@ -67,16 +67,12 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
   // 3. AUTHENTICATE USER CREDENTIALS LOGIC:
   // check if user credentials are true (retrieved) and compare submitted password with DB password
 
-  if (
-    v_db_userCredentials &&
-    (await v_db_userCredentials.m_compare_password(DATA_PASSWORD))
-  ) {
+  if (v_db_userCredentials && (await v_db_userCredentials.m_compare_password(DATA_PASSWORD))) {
     //
     // generate JWT:
     const generatedJWT = jwt.sign(
       {
         _id: v_db_userCredentials._id,
-        DATA_USERNAME: v_db_userCredentials.DATA_USERNAME,
       },
       process.env.V_JWT_SECRET,
       {

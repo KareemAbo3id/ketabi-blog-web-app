@@ -27,16 +27,17 @@ V_USER_ROUTER_GROUP.post(AuthPath.ForgetPassword, f_control_forget_password);
 
 V_USER_ROUTER_GROUP.patch(AuthPath.ResetPassword, f_control_reset_password);
 
-V_USER_ROUTER_GROUP.patch(
-  CheckpointPath.VerifyEmailAddress,
-  f_control_verify_email_address
-);
-
 // PRIVATE ACCESS ENDPOINTS:
 V_USER_ROUTER_GROUP.patch(
   CheckpointPath.DeactivateAccount,
   f_handle_protect_private_route,
   f_control_deactivate_account
+);
+
+V_USER_ROUTER_GROUP.get(
+  CheckpointPath.VerifyEmailAddress,
+  f_handle_protect_private_route,
+  f_control_verify_email_address
 );
 
 V_USER_ROUTER_GROUP.patch(
@@ -45,11 +46,7 @@ V_USER_ROUTER_GROUP.patch(
   f_control_reactivate_account
 );
 
-V_USER_ROUTER_GROUP.get(
-  UserPath.Profile,
-  f_handle_protect_private_route,
-  f_control_get_profile
-);
+V_USER_ROUTER_GROUP.get(UserPath.Profile, f_handle_protect_private_route, f_control_get_profile);
 
 V_USER_ROUTER_GROUP.patch(
   UserPath.UpdatePassword,

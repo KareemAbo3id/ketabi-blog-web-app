@@ -12,9 +12,7 @@ import f_set_json_response from "../../server-helpers/set_json_response.helper.j
  */
 const f_control_update_profile = asyncHandler(async (request, response) => {
   // get the user credentials from DB:
-  const v_db_userCredentials = await Model_UserData.findById(
-    request.v_db_userCredentials._id
-  );
+  const v_db_userCredentials = await Model_UserData.findById(request.v_db_userCredentials._id);
 
   // UPDATE USER DATA:
   // check if user credentials are true (retrieved) and assign submitted user credentials to DB credentials:

@@ -48,8 +48,18 @@ const f_validate_password = (p_password) => {
  * @returns {Boolean}
  */
 const f_validate_username = (p_username) => {
-  if (!p_username || p_username.length < 5 || p_username.length > 255) {
-    return false;
+  // p_username max length is 255, min length is 8
+  // p_username can not contain `.` or `@` or `#` or `$` or `%` or `&` or `*` or `!` or `?` or `^` or `(` or `)` or `=` or `+` or `~` or `;` or `:` or `,` or `<` or `>` or `[` or `]` or `{` or `}` or `|` or `\` or `/`
+  let usernameMax = 255;
+  let usernameMin = 8;
+  let usernameRegex = /^[a-zA-Z0-9_]*$/;
+  if (
+    p_username.length < usernameMin ||
+    p_username.length > usernameMax ||
+    !p_username.match(usernameRegex) ||
+    !p_username
+  ) {
+    return true;
   }
 };
 

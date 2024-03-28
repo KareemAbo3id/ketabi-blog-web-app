@@ -50,7 +50,6 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   const V_RESET_PASSWORD_TOKEN = jwt.sign(
     {
       _id: v_db_userCredentials._id,
-      DATA_USERNAME: v_db_userCredentials.DATA_USERNAME,
     },
     process.env.JWT_SECRET,
     {

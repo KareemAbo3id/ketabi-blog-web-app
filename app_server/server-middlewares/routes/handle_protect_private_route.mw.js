@@ -16,14 +16,11 @@ const f_handle_protect_private_route = asyncHandler(async (req, res, next) => {
   if (v_token) {
     // token exists and valid:
     try {
-      const v_decodedUserCredentials = jwt.verify(
-        v_token,
-        process.env.V_JWT_SECRET
-      );
+      const v_decodedUserCredentials = jwt.verify(v_token, process.env.V_JWT_SECRET);
 
-      req.v_db_userCredentials = await Model_UserData.findById(
-        v_decodedUserCredentials._id
-      ).select("-data_password");
+      req.v_db_userCredentials = await Model_UserData.findById(v_decodedUserCredentials._id).select(
+        "-DATA_PASSWORD"
+      );
 
       next();
     } catch (error) {

@@ -115,7 +115,6 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     const generatedJWT = jwt.sign(
       {
         _id: v_newUserPayload._id,
-        DATA_USERNAME: v_newUserPayload.DATA_USERNAME,
       },
       process.env.V_JWT_SECRET,
       {

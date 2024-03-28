@@ -14,7 +14,7 @@ function f_get_server_validation_messages() {
   // email validation messages:
   const Message_EmailNotValid = "Email address is not valid, please try again";
   const Message_PasswordNotValid = `Password must be between 8 and 30 characters, and contain at least one lowercase letter, one uppercase letter, and one number`;
-  const Message_UsernameNotValid = `Username must be between 5 and 255 characters`;
+  const Message_UsernameNotValid = `Username must be between 8 and 255 characters long, and can only contain letters, numbers, and underscores`;
 
   // wrong credentials messages:
   const Message_UserNotFound = `User not found, please try again`;
