@@ -1,20 +1,3 @@
-// B. **Reset Password Endpoint**:
-// - **URL**: `/user/auth/reset-password/:TEMP_RESET_PASSWORD_TOKEN`
-// - **METHOD**: `PATCH`
-// - **Request Body**: `{ DATA_NEW_PASSWORD, DATA_CONFIRM_NEW_PASSWORD }`
-// steps:
-// 1. get the `TEMP_RESET_PASSWORD_TOKEN` from the URL.
-// 2. check if the token exists in the database.
-// 3. if the token exists, check if the token is expired.
-// 4. if the token is expired, return an error message.
-// 5. if the token is not expired, check if the new password and confirm new password match.
-// 6. if the new password and confirm new password match, update the user's password in the database.
-// 7. return a success message.
-// END of Reset Password Endpoint
-
-// start code:
-
-// import required modules:
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";

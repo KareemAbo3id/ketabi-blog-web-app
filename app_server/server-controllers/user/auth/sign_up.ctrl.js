@@ -8,7 +8,7 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import f_set_verify_emailaddress_mail_template from "../../../server-templates/verify-email-mail/verify_email_mail.temp.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
-import { V_PORT } from "../../../server-configs/set_server_port.cnfg.js";
+import f_get_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
   f_check_userCredentials,
   f_validate_email_address,
@@ -129,7 +129,8 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     // send welcome email to the new user, and a link to verify the email:
 
     // set verification link:
-    const v_verificationLink = `${request.protocol}://${request.hostname}:${V_PORT}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
+    const V_BASE_URL = f_get_url_base(request);
+    const v_verificationLink = `${V_BASE_URL}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
 
     console.log(v_verificationLink);
 
