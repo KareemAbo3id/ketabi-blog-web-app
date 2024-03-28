@@ -16,7 +16,6 @@
 
 // import required modules:
 import asyncHandler from "express-async-handler";
-import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
@@ -27,7 +26,6 @@ const {
   Message_UserNotFound,
   Message_PasswordsNotMatch,
   Message_TokenNotValidExpired,
-  Message_PasswordsMatch,
 } = f_get_server_validation_messages();
 
 /**
@@ -72,18 +70,6 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   if (DATA_NEW_PASSWORD !== DATA_CONFIRM_NEW_PASSWORD) {
     response.status(StatusCodes.BAD_REQUEST);
     throw new Error(Message_PasswordsNotMatch);
-  }
-
-  // compare the new password with the old password in the database:
-  const v_isPasswordsMatch = await bcrypt.compare(
-    DATA_NEW_PASSWORD,
-    v_db_userCredentials.DATA_PASSWORD
-  );
-
-  // if the new password is the same as the old password, return an error message:
-  if (v_isPasswordsMatch) {
-    response.status(StatusCodes.BAD_REQUEST);
-    throw new Error(Message_PasswordsMatch);
   }
 
   // 4. update the user password in the database:
