@@ -13,7 +13,13 @@ import {
   f_validate_email_address,
 } from "../../../server-helpers/server_validation_funcs.helper.js";
 
-const { Message_EmailNotValid, Message_UserNotFound } = f_get_server_validation_messages();
+const {
+  Message_EmailNotValid,
+  Message_UserNotFound,
+  Message_ResetPasswordLinkSent,
+  Message_TransactionalEmailFailed,
+  Message_TransactionalEmailSuccess,
+} = f_get_server_validation_messages();
 
 /**
  * ### Forget Password - Control
@@ -38,7 +44,7 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   // find user credentials in DB:
   const v_db_userCredentials = await Model_UserData.findOne({
     DATA_EMAIL_ADDRESS,
-  });
+  }).select("-DATA_PASSWORD");
 
   // check if user credentials are true (retrieved):
   if (!f_check_userCredentials(v_db_userCredentials)) {
@@ -51,9 +57,9 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
     {
       _id: v_db_userCredentials._id,
     },
-    process.env.JWT_SECRET,
+    process.env.V_JWT_SECRET,
     {
-      expiresIn: "1h",
+      expiresIn: "90d",
     }
   );
 
@@ -61,14 +67,14 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN = V_RESET_PASSWORD_TOKEN;
 
   // set expiry time for the token to 1 hour:
-  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES = Date.now() + 60 * 60 * 1000;
+  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES = Date.now() + 60 * 60 * 1000; // 1 hour
 
   // save the update:
   await v_db_userCredentials.save();
 
   // 5. generate a link with the token in the URL:
   const V_BASE_URL = f_get_url_base(request);
-  const V_RESET_PASSWORD_LINK = `${V_BASE_URL}/user/auth/reset-password/:${V_RESET_PASSWORD_TOKEN}`;
+  const V_RESET_PASSWORD_LINK = `${V_BASE_URL}/user/auth/reset-password/${V_RESET_PASSWORD_TOKEN}`;
 
   // 6. send an email to the user with the link:
 
@@ -89,16 +95,14 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
       html: messageFields.html,
     },
     {
-      failedMessage: `Reset password email failed to send, please try again`,
-      succeedMessage: `Reset password email sent successfully`,
+      failedMessage: Message_TransactionalEmailFailed,
+      succeedMessage: Message_TransactionalEmailSuccess,
     },
     response
   );
 
   // the result:
-  response
-    .status(StatusCodes.CREATED)
-    .json(f_set_json_response("Reset password link sent to your email address."));
+  response.status(StatusCodes.CREATED).json(f_set_json_response(Message_ResetPasswordLinkSent));
 });
 
 export default f_control_forget_password;

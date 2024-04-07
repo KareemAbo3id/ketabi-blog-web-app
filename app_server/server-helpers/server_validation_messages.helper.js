@@ -34,15 +34,19 @@ function f_get_server_validation_messages() {
   const Message_PasswordUpdated = `Password updated`;
   const Message_ProfileUpdated = `Profile updated`;
   const Message_PasswordReset = `Password reset`;
-  const Message_UserLoggedIn = `user logged in, token generated and saved in cookie`;
-  const Message_UserLoggedOut = `User logged out, token removed from cookie`;
-  const Message_UserDeactivated = `User deactivated, token removed from cookie`;
-  const Message_UserReactivated = `User reactivated, token generated and saved in cookie`;
-  const Message_UserCreated = `user signed up, token generated and saved in cookie`;
-  const Message_ResetPasswordLinkSent = `Reset password link sent to your email address`;
+  const Message_UserLoggedIn = `user logged in`;
+  const Message_UserLoggedOut = `User logged out`;
+  const Message_UserDeactivated = `User deactivated`;
+  const Message_UserReactivated = `User reactivated`;
+  const Message_UserCreated = `Your account has been created, please check your email address to verify your account, if you didn't receive the email, please check your spam or junk folder.`;
+  const Message_ResetPasswordLinkSent = `Your reset password link has been created, please check your email address to reset your password, if you didn't receive the email, please check your spam or junk folder.`;
 
   // general server messages:
   const Message_InternalServerError = `Something went wrong, please try again later`;
+
+  // transactional email messages:
+  const Message_TransactionalEmailSuccess = `Email sent successfully, please check your inbox or spam or junk folder`;
+  const Message_TransactionalEmailFailed = `Email not sent, please try again`;
 
   //
   return {
@@ -184,6 +188,18 @@ function f_get_server_validation_messages() {
      * ```
      */
     Message_InternalServerError,
+    /**
+     * ```
+     * "Email sent successfully, please check your inbox or spam or junk folder"
+     * ```
+     */
+    Message_TransactionalEmailSuccess,
+    /**
+     * ```
+     * "Email not sent, please try again"
+     * ```
+     */
+    Message_TransactionalEmailFailed,
   };
 }
 

@@ -83,10 +83,12 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
     // save JWT in http-cookie:
     f_set_httponly_cookie(response, generatedJWT);
 
+    // TODO [BACKEND]: send a notification email to the user that he logged in.
+
     // the result:
     response.status(StatusCodes.OK).json(
-      f_set_json_response(Message_UserLoggedIn, {
-        userCredentials: v_db_userCredentials,
+      f_set_json_response(`(@${v_db_userCredentials.DATA_USERNAME}) ${Message_UserLoggedIn}`, {
+        userCredentials: v_db_userCredentials.m_get_user_credentials_without_password(),
         token: generatedJWT,
       })
     );
@@ -99,4 +101,4 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
   }
 });
 
-export default f_control_sign_in;
+export default f_control_sign_in; // done.

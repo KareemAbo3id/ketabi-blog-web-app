@@ -7,9 +7,7 @@ import { StatusCodes } from "http-status-codes";
  */
 function f_handle_global_error(err, req, res, next) {
   let v_errStatusCode =
-    res.statusCode === StatusCodes.OK
-      ? StatusCodes.INTERNAL_SERVER_ERROR
-      : res.statusCode;
+    res.statusCode === StatusCodes.OK ? StatusCodes.INTERNAL_SERVER_ERROR : res.statusCode;
   let v_errMessage = err.message;
   let v_errStack = err.stack;
 
@@ -20,8 +18,8 @@ function f_handle_global_error(err, req, res, next) {
   }
 
   res.status(v_errStatusCode).json({
-    error_status_code: v_errStatusCode,
     error_message: v_errMessage,
+    error_status_code: v_errStatusCode,
     error_stack:
       // eslint-disable-next-line no-undef
       process.env.V_EXPRESS_SERVER_ENV === "production" ? null : v_errStack,

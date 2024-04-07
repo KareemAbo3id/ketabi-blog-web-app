@@ -97,6 +97,16 @@ const Schema_UserData = mongoose.Schema(
       required: true,
       default: true,
     },
+    //
+    //
+    TEMP_RESET_PASSWORD_TOKEN: {
+      type: String,
+    },
+    //
+    //
+    TEMP_RESET_PASSWORD_TOKEN_EXPIRES: {
+      type: Date,
+    },
   },
   { timestamps: true },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }

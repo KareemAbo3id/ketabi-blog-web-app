@@ -25,6 +25,8 @@ const {
   Message_PasswordsNotMatch,
   Message_UserCreated,
   Message_InternalServerError,
+  Message_TransactionalEmailFailed,
+  Message_TransactionalEmailSuccess,
 } = f_get_server_validation_messages();
 
 /**
@@ -131,8 +133,6 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     const V_BASE_URL = f_get_url_base(request);
     const v_verificationLink = `${V_BASE_URL}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
 
-    console.log(v_verificationLink);
-
     // set message fields:
     const { messageFields } = f_set_verify_emailaddress_mail_template(
       v_newUserPayload.DATA_FIRSTNAME,
@@ -150,8 +150,8 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
         html: messageFields.html,
       },
       {
-        failedMessage: `Verification email not sent, please try again`,
-        succeedMessage: `Verification email sent successfully, please check your inbox`,
+        failedMessage: Message_TransactionalEmailFailed,
+        succeedMessage: Message_TransactionalEmailSuccess,
       },
       response
     );
@@ -159,7 +159,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     // the result:
     response.status(StatusCodes.CREATED).json(
       f_set_json_response(Message_UserCreated, {
-        userCredentials: v_newUserPayload,
+        userCredentials: v_newUserPayload.m_get_user_credentials_without_password(),
         token: generatedJWT,
       })
     );
@@ -172,4 +172,4 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   }
 });
 
-export default f_control_sign_up;
+export default f_control_sign_up; // done.

@@ -34,7 +34,7 @@ V_USER_ROUTER_GROUP.patch(
   f_control_deactivate_account
 );
 
-V_USER_ROUTER_GROUP.get(
+V_USER_ROUTER_GROUP.patch(
   CheckpointPath.VerifyEmailAddress,
   f_handle_protect_private_route,
   f_control_verify_email_address

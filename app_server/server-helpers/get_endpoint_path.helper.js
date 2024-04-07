@@ -88,7 +88,7 @@ function f_get_endpoint_path() {
      * @param {string} userId
      * @param {string} tokenExtension
      */
-    ResetPassword: `${AppPath.AUTH}/reset-password/:V_RESET_PASSWORD_TOKEN`,
+    ResetPassword: `${AppPath.AUTH}/reset-password/:TEMP_RESET_PASSWORD_TOKEN`,
   };
 
   const CheckpointPath = {

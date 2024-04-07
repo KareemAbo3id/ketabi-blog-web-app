@@ -10,8 +10,8 @@ function f_handle_not_found_error(req, res, next) {
   const v_errMessage = `Route Not Found: '${req.originalUrl}' Type the correct route path.`;
 
   res.status(v_errStatusCode).json({
-    error_status_code: v_errStatusCode,
     error_message: v_errMessage,
+    error_status_code: v_errStatusCode,
   });
 
   next();

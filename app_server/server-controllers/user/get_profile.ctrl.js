@@ -10,17 +10,8 @@ import f_set_json_response from "../../server-helpers/set_json_response.helper.j
  * @access private
  */
 const f_control_get_profile = asyncHandler(async (request, response) => {
-  // TODO test the params from req
-  // get the params from client request:
-  // const v_loggedInUserCredentials = {
-  //     _id: request.v_db_userCredentials._id,
-  //     data_firstName: request.v_db_userCredentials.data_firstName,
-  //     data_lastName: request.v_db_userCredentials.data_lastName,
-  //     data_emailAddress: request.v_db_userCredentials.data_emailAddress,
-  //     data_username: request.v_db_userCredentials.data_username,
-  //     data_isEmailVerfied: request.v_db_userCredentials.data_isEmailVerfied,
-  //     data_isAccountActive: request.v_db_userCredentials.data_isAccountActive,
-  // };
+  // FIXME [BACKEND]: fix get user profile controller
+
   const v_loggedInUserCredentials = {
     ...request.v_db_userCredentials,
     data_isAccountActive: request.v_db_userCredentials.data_isAccountActive,
@@ -39,9 +30,7 @@ const f_control_get_profile = asyncHandler(async (request, response) => {
   // if user account is deactive:
   else {
     response.status(StatusCodes.UNAUTHORIZED);
-    throw new Error(
-      `user @${v_loggedInUserCredentials.data_username} is deactivated`
-    );
+    throw new Error(`user @${v_loggedInUserCredentials.data_username} is deactivated`);
   }
 });
 
