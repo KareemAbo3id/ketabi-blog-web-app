@@ -6,7 +6,7 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 
-const { Message_UserLoggedOut } = f_get_server_validation_messages();
+const { Message_UserLoggedOut, Message_UserNotLoggedIn } = f_get_server_validation_messages();
 
 /**
  * ### Sign Out User By Deleting JWT - Control
@@ -16,24 +16,25 @@ const { Message_UserLoggedOut } = f_get_server_validation_messages();
  */
 const f_control_sign_out = asyncHandler(async (request, response) => {
   //
-  // get the token from http request's cookies:
+  // 1. get the token from http request's cookies:
   let v_token = request.cookies.jwt;
 
   // if there is no token:
   if (!v_token) {
     response.status(StatusCodes.UNAUTHORIZED);
-    throw new Error("user is not logged in");
+    throw new Error(Message_UserNotLoggedIn);
   }
 
+  // 2. verify the token:
   // eslint-disable-next-line no-undef
   const v_decodedUserCredentials = jwt.verify(v_token, process.env.V_JWT_SECRET);
 
-  // get the username from decoded token:
+  // 3. get the username from decoded token:
   request.v_db_userCredentials = await Model_UserData.findById(v_decodedUserCredentials._id).select(
     "-DATA_PASSWORD"
   );
 
-  // delete the http-only cookie:
+  // 4. delete the http-only cookie:
   f_delete_httponly_cookie(response);
 
   // the result:

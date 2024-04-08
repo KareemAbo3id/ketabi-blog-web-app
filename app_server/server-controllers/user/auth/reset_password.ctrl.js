@@ -5,9 +5,17 @@ import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import { f_check_userCredentials } from "../../../server-helpers/server_validation_funcs.helper.js";
+import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 
-const { Message_UserNotFound, Message_PasswordsNotMatch, Message_TokenNotValidExpired } =
-  f_get_server_validation_messages();
+const {
+  Message_UserNotFound,
+  Message_PasswordsNotMatch,
+  Message_TokenNotValidExpired,
+  Message_NewPasswordSameAsOldOne,
+  Message_PasswordUpdated,
+  Message_TransactionalEmailFailed,
+  Message_TransactionalEmailSuccess,
+} = f_get_server_validation_messages();
 
 /**
  * ### Reset Password - Control
@@ -58,12 +66,12 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
 
   if (v_isDbPasswordEqualCurrentPassword) {
     response.status(StatusCodes.BAD_REQUEST);
-    throw new Error("You cannot assign your same password, please try again");
+    throw new Error(Message_NewPasswordSameAsOldOne);
   }
 
   // 4. update the user password in the database:
-  // v_db_userCredentials.updateOne({ DATA_PASSWORD: DATA_NEW_PASSWORD });
   v_db_userCredentials.DATA_PASSWORD = DATA_NEW_PASSWORD;
+
   // 5. delete the token and token expiry time from the database:
   v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN = undefined;
   v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES = undefined;
@@ -73,8 +81,32 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
 
   // TODO [BACKEND]: send an email to the user that the password has been changed.
 
+  // 6. send a response to the user that the password has been updated:
+
+  // set message fields:
+  const { messageFields } = f_set_password_updated_mail_template(
+    v_db_userCredentials.DATA_FIRSTNAME
+  );
+
+  // send email:
+  f_send_transactional_email(
+    {
+      // eslint-disable-next-line no-undef
+      from: process.env.V_EMAIL_SERVER_SENDER,
+      to: v_db_userCredentials.DATA_EMAIL_ADDRESS,
+      subject: messageFields.subject,
+      message: messageFields.message,
+      html: messageFields.html,
+    },
+    {
+      failedMessage: Message_TransactionalEmailFailed,
+      succeedMessage: Message_TransactionalEmailSuccess,
+    },
+    response
+  );
+
   // the result:
-  response.status(StatusCodes.CREATED).json(f_set_json_response("user password has been updated"));
+  response.status(StatusCodes.CREATED).json(f_set_json_response(Message_PasswordUpdated));
 });
 
 export default f_control_reset_password; // done.

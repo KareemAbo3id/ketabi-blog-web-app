@@ -1,0 +1,5 @@
+{%v_temp_firstName%}
+{%v_temp_mainMessage%}
+{%v_temp_toSendLink%}
+{%v_temp_buttonCaption%}
+{%v_temp_mailNote%}

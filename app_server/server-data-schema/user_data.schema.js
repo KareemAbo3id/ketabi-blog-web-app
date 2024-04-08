@@ -13,6 +13,9 @@ import mongoose from "mongoose";
  * @param {Boolean} FLAG_AGREEMENT_CONFIRMED
  * @param {Boolean} FLAG_EMAIL_VERFIED
  * @param {Boolean} FLAG_ACCOUNT_ACTIVATED
+ * @param {String} TEMP_RESET_PASSWORD_TOKEN
+ * @param {Date} TEMP_RESET_PASSWORD_TOKEN_EXPIRES
+ * @returns {Object} Schema_UserData
  */
 const Schema_UserData = mongoose.Schema(
   {
@@ -108,7 +111,11 @@ const Schema_UserData = mongoose.Schema(
       type: Date,
     },
   },
+  //
+  //
   { timestamps: true },
+  //
+  //
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 

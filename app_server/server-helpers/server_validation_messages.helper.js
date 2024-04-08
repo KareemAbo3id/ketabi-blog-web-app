@@ -18,11 +18,13 @@ function f_get_server_validation_messages() {
 
   // wrong credentials messages:
   const Message_UserNotFound = `User not found, please try again`;
+  const Message_UserNotLoggedIn = `User not logged in`;
   const Message_WrongPassword = `Wrong password, please try again`;
   const Message_WrongEmail = `Wrong email, please try again`;
   const Message_WrongUsername = `Wrong username, please try again`;
   const Message_WrongEmailPassword = `Wrong email or password, please try again`;
   const Message_PasswordsNotMatch = `Passwords do not match, please try again`;
+  const Message_NewPasswordSameAsOldOne = `New password cannot be the same as the old password. Please try again`;
   const Message_TokenNotValidExpired = `Token is not valid or expired, please try again`;
 
   // already exists messages:
@@ -47,6 +49,10 @@ function f_get_server_validation_messages() {
   // transactional email messages:
   const Message_TransactionalEmailSuccess = `Email sent successfully, please check your inbox or spam or junk folder`;
   const Message_TransactionalEmailFailed = `Email not sent, please try again`;
+  const Message_ResetPasswordEmailSubject = `Password reset request - Ketabi app`;
+  const Message_UpdatePasswordEmailSubject = `Password has been updated - Ketabi app`;
+  const Message_VerifyEmailAddressRequest = `Welcome to Ketabi, Please Verify Your Email Address`;
+  const Message_EmailVerifiedEmailSubject = `Welcome to Ketabi, Your Email has been Verified!`;
 
   //
   return {
@@ -74,6 +80,12 @@ function f_get_server_validation_messages() {
      * ```
      */
     Message_UserNotFound,
+    /**
+     * ```
+     * "User not logged in"
+     * ```
+     */
+    Message_UserNotLoggedIn,
     /**
      * ```
      * "Wrong password, please try again"
@@ -104,6 +116,12 @@ function f_get_server_validation_messages() {
      * ```
      */
     Message_PasswordsNotMatch,
+    /**
+     * ```
+     * "New password cannot be the same as the old password. Please try again"
+     * ```
+     */
+    Message_NewPasswordSameAsOldOne,
     /**
      * ```
      * "Token is not valid or expired, please try again"
@@ -200,6 +218,30 @@ function f_get_server_validation_messages() {
      * ```
      */
     Message_TransactionalEmailFailed,
+    /**
+     * ```
+     * "Password reset request - Ketabi app"
+     * ```
+     */
+    Message_ResetPasswordEmailSubject,
+    /**
+     * ```
+     * "Password has been updated - Ketabi app"
+     * ```
+     */
+    Message_UpdatePasswordEmailSubject,
+    /**
+     * ```
+     * "Welcome to Ketabi, Please Verify Your Email Address"
+     * ```
+     */
+    Message_VerifyEmailAddressRequest,
+    /**
+     * ```
+     * "Welcome to Ketabi, Your Email has been Verified!"
+     * ```
+     */
+    Message_EmailVerifiedEmailSubject,
   };
 }
 

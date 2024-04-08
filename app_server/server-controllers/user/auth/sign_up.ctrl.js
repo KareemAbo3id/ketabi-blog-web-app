@@ -6,7 +6,7 @@ import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
-import f_set_verify_emailaddress_mail_template from "../../../server-templates/verify-email-mail/verify_email_mail.temp.js";
+import f_set_verify_emailaddress_mail_template from "../../../server-templates/html-templates-functions/set_verify_email_mail.temp.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 import f_get_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
