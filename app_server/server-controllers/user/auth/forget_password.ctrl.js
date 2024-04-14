@@ -6,7 +6,7 @@ import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
-import f_set_reset_password_mail_template from "../../../server-templates/html-templates-functions/set_reset_password_mail.temp.js";
+import f_set_reset_password_mail_template from "../../../server-templates/mail-templates-setters/action/set_reset_password_mail.temp.js";
 import f_get_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
   f_check_userCredentials,
@@ -19,7 +19,6 @@ const {
   Message_ResetPasswordLinkSent,
   Message_TransactionalEmailFailed,
   Message_TransactionalEmailSuccess,
-  Message_ResetPasswordEmailRequestMain,
 } = f_get_server_validation_messages();
 
 /**
@@ -68,7 +67,8 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN = V_RESET_PASSWORD_TOKEN;
 
   // set expiry time for the token to 1 hour:
-  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES = Date.now() + 60 * 60 * 1000; // 1 hour
+  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES =
+    Date.now() + 60 * 60 * 1000; // 1 hour
 
   // save the update:
   await v_db_userCredentials.save();
@@ -77,12 +77,13 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   const V_BASE_URL = f_get_url_base(request);
   const V_RESET_PASSWORD_LINK = `${V_BASE_URL}/user/auth/reset-password/${V_RESET_PASSWORD_TOKEN}`;
 
+  console.log(V_RESET_PASSWORD_LINK);
+
   // 6. send an email to the user with the link:
 
   // set message fields:
   const { messageFields } = f_set_reset_password_mail_template(
     v_db_userCredentials.DATA_FIRSTNAME,
-    Message_ResetPasswordEmailRequestMain,
     V_RESET_PASSWORD_LINK
   );
 
@@ -104,7 +105,9 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   );
 
   // the result:
-  response.status(StatusCodes.CREATED).json(f_set_json_response(Message_ResetPasswordLinkSent));
+  response
+    .status(StatusCodes.CREATED)
+    .json(f_set_json_response(Message_ResetPasswordLinkSent));
 });
 
 export default f_control_forget_password;

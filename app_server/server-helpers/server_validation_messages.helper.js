@@ -51,16 +51,29 @@ function f_get_server_validation_messages() {
   const Message_TransactionalEmailFailed = `Email not sent, please try again`;
 
   // transactional email subject messages:
-  const Message_ResetPasswordEmailRequestSubject = `Password reset requested - Ketabi app`;
-  const Message_UpdatePasswordEmailSubject = `Password has been updated - Ketabi app`;
-  const Message_VerifyEmailAddressEmailRequestSubject = `Welcome to Ketabi, Please Verify Your Email Address`;
-  const Message_EmailVerifiedEmailSubject = `Welcome to Ketabi, Your Email has been Verified!`;
+  const Message_ResetPasswordRequestSubject = `Password reset requested - Ketabi app`;
+  const Message_UpdatedPasswordSubject = `Password has been updated - Ketabi app`;
+  const Message_VerifyEmailRequestSubject = `Welcome to Ketabi, Please Verify Your Email Address`;
+  const Message_VerifiedEmailSubject = `Welcome to Ketabi, Your Email has been Verified!`;
+  const Message_LoggedinConfirmSubject = `New Login to your account - Ketabi app`;
+  const Message_LoggedinConfirmMain = (p_recipient_username, p_loggedInAt) =>
+    `A new login to your account @${p_recipient_username} has been detected at ${p_loggedInAt}`;
 
   // transactional email main messages:
-  const Message_EmailVerifiedEmailMain = `We are happy to inform you that your email has been verified successfully, enjoy your blogging journey.`;
-  const Message_EmailVerifyEmailRequestMain = `Your account has been successfully created, please click the button below to verify your email address.`;
-  const Message_ResetPasswordEmailRequestMain = `You've asked to reset your password. Please click on the link below to update your password, or ignore this message if you didn't request this change.`;
-  const Message_PasswordUpdatedEmailMain = `Your password has been updated successfully, if you didn't request this change, please contact us immediately.`;
+  const Message_VerifiedEmailMain = `We are happy to inform you that your email has been successfully verified, enjoy your blogging journey.`;
+  const Message_VerifyEmailRequestMain = `Your account has been successfully created, please click the button below to verify your email address.`;
+  const Message_ResetPasswordRequestMain = `You've asked to reset your password. Please click on the link below to update your password, or ignore this message if you didn't request this change.`;
+  const Message_UpdatedPasswordMain = `Your password has been updated successfully, if you didn't request this change, please contact us immediately.`;
+
+  // transactional email notes messages:
+  const Message_TempLinkNote = `* Please note that the link above will expire in 60 minutes.`;
+  const Message_SignUpConfirmNote = `* You are receiving this email because you have registered an account with us.`;
+  const Message_VerifiedEmailNote = (p_recipient_username, p_createdAt) =>
+    `* Your account with username: @${p_recipient_username} has been successfully verified. Account created at: ${p_createdAt}`;
+
+  const Message_UpdatedPasswordNote = (passwordUpdatedAt) =>
+    `* Your password has been updated successfully. Password updated at: ${passwordUpdatedAt}`;
+  const Message_LoggedinConfirmNote = `* If this was you, you can ignore this message. If this wasn't you, please reset your password immediately.`;
 
   //
   return {
@@ -231,49 +244,93 @@ function f_get_server_validation_messages() {
      * "Password reset request - Ketabi app"
      * ```
      */
-    Message_ResetPasswordEmailRequestSubject,
+
+    Message_ResetPasswordRequestSubject,
     /**
      * ```
      * "Password has been updated - Ketabi app"
      * ```
      */
-    Message_UpdatePasswordEmailSubject,
+    Message_UpdatedPasswordSubject,
     /**
      * ```
      * "Welcome to Ketabi, Please Verify Your Email Address"
      * ```
      */
-    Message_VerifyEmailAddressEmailRequestSubject,
+
+    Message_VerifyEmailRequestSubject,
     /**
      * ```
      * "Welcome to Ketabi, Your Email has been Verified!"
      * ```
      */
-    Message_EmailVerifiedEmailSubject,
+    Message_VerifiedEmailSubject,
     /**
      * ```
-     * "We are happy to inform you that your email has been verified successfully."
+     * "New Login to your account - Ketabi app"
      * ```
      */
-    Message_EmailVerifiedEmailMain,
+    Message_LoggedinConfirmSubject,
+    /**
+     * ```
+     * `A new login to your account ${p_recipient_username} has been detected at ${loggedInAt}
+     * ```
+     */
+    Message_LoggedinConfirmMain,
+    /**
+     * ```
+     * "We are happy to inform you that your email has been successfully verified, enjoy your blogging journey."
+     * ```
+     */
+    Message_VerifiedEmailMain,
     /**
      * ```
      * "Your account has been successfully created, please click the button below to verify your email address."
      * ```
      */
-    Message_EmailVerifyEmailRequestMain,
+    Message_VerifyEmailRequestMain,
     /**
      * ```
      * "You've asked to reset your password. Please click on the link below to update your password, or ignore this message if you didn't request this change."
      * ```
      */
-    Message_ResetPasswordEmailRequestMain,
+    Message_ResetPasswordRequestMain,
     /**
      * ```
      * "Your password has been updated successfully, if you didn't request this change, please contact us immediately."
      * ```
      */
-    Message_PasswordUpdatedEmailMain,
+    Message_UpdatedPasswordMain,
+    /**
+     * ```
+     * "* Please note that the link above will expire in 60 minutes."
+     * ```
+     */
+    Message_TempLinkNote,
+    /**
+     * ```
+     * "* You are receiving this email because you have registered an account with us."
+     * ```
+     */
+    Message_SignUpConfirmNote,
+    /**
+     * ```
+     * `Your account with username: ${p_recipient_username} has been successfully verified. Account created at: ${createdAt}`
+     * ```
+     */
+    Message_VerifiedEmailNote,
+    /**
+     * ```
+     * `Your password has been updated successfully. Password updated at: ${passwordUpdatedAt}`
+     * ```
+     */
+    Message_UpdatedPasswordNote,
+    /**
+     * ```
+     * "* If this was you, you can ignore this message. If this wasn't you, please reset your password immediately."
+     * ```
+     */
+    Message_LoggedinConfirmNote,
   };
 }
 

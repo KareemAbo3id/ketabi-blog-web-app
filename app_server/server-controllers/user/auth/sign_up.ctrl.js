@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
@@ -6,7 +5,7 @@ import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
-import f_set_verify_emailaddress_mail_template from "../../../server-templates/html-templates-functions/set_verify_email_mail.temp.js";
+import f_set_verify_emailaddress_mail_template from "../../../server-templates/mail-templates-setters/action/set_verify_email_mail.temp.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 import f_get_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
@@ -27,7 +26,6 @@ const {
   Message_InternalServerError,
   Message_TransactionalEmailFailed,
   Message_TransactionalEmailSuccess,
-  Message_EmailVerifyEmailRequestMain,
 } = f_get_server_validation_messages();
 
 /**
@@ -119,6 +117,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
       {
         _id: v_newUserPayload._id,
       },
+      // eslint-disable-next-line no-undef
       process.env.V_JWT_SECRET,
       {
         expiresIn: "90d",
@@ -128,19 +127,18 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     // save JWT in http-cookie:
     f_set_httponly_cookie(response, generatedJWT);
 
-    // send welcome email to the new user, and a link to verify the email:
+    // 4. send welcome email to the new user, and a link to verify the email:
 
     // set verification link:
     const V_BASE_URL = f_get_url_base(request);
-    const v_verificationLink = `${V_BASE_URL}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
+    const V_VERIFICATION_LINK = `${V_BASE_URL}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
 
-    console.log(v_verificationLink);
+    console.log(V_VERIFICATION_LINK);
 
     // set message fields:
     const { messageFields } = f_set_verify_emailaddress_mail_template(
       v_newUserPayload.DATA_FIRSTNAME,
-      v_verificationLink,
-      Message_EmailVerifyEmailRequestMain
+      V_VERIFICATION_LINK
     );
 
     // send email to the new user:
@@ -163,7 +161,8 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     // the result:
     response.status(StatusCodes.CREATED).json(
       f_set_json_response(Message_UserCreated, {
-        userCredentials: v_newUserPayload.m_get_user_credentials_without_password(),
+        userCredentials:
+          v_newUserPayload.m_get_user_credentials_without_password(),
         token: generatedJWT,
       })
     );

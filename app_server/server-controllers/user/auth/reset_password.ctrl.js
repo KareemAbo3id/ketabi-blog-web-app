@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
-import f_set_password_updated_mail_template from "../../../server-templates/html-templates-functions/set_password_updated_mail.temp.js";
+import f_set_password_updated_mail_template from "../../../server-templates/mail-templates-setters/inform/set_password_updated_mail.temp.js";
 import { f_check_userCredentials } from "../../../server-helpers/server_validation_funcs.helper.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 
@@ -16,7 +16,6 @@ const {
   Message_PasswordUpdated,
   Message_TransactionalEmailFailed,
   Message_TransactionalEmailSuccess,
-  Message_PasswordUpdatedEmailMain,
 } = f_get_server_validation_messages();
 
 /**
@@ -26,7 +25,6 @@ const {
  * @method PATCH
  * @access public
  */
-
 const f_control_reset_password = asyncHandler(async (request, response) => {
   //
   // 1. get the `TEMP_RESET_PASSWORD_TOKEN` from the URL
@@ -45,7 +43,9 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   // check if user credentials are true (retrieved):
   if (!f_check_userCredentials(v_db_userCredentials)) {
     response.status(StatusCodes.NOT_FOUND);
-    throw new Error(`${Message_TokenNotValidExpired} or ${Message_UserNotFound}`);
+    throw new Error(
+      `${Message_TokenNotValidExpired} or ${Message_UserNotFound}`
+    );
   }
 
   // TODO: make sure it works
@@ -88,7 +88,6 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   // set message fields:
   const { messageFields } = f_set_password_updated_mail_template(
     v_db_userCredentials.DATA_FIRSTNAME,
-    Message_PasswordUpdatedEmailMain,
     v_db_userCredentials.updatedAt
   );
 
@@ -110,7 +109,9 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   );
 
   // the result:
-  response.status(StatusCodes.CREATED).json(f_set_json_response(Message_PasswordUpdated));
+  response
+    .status(StatusCodes.CREATED)
+    .json(f_set_json_response(Message_PasswordUpdated));
 });
 
 export default f_control_reset_password; // done.

@@ -5,6 +5,8 @@ import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
+import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
+import f_set_loggedin_mail_template from "../../../server-templates/mail-templates-setters/inform/set_loggedin_mail.temp.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import {
   f_check_userCredentials,
@@ -19,6 +21,8 @@ const {
   Message_WrongPassword,
   Message_UserLoggedIn,
   Message_WrongEmailPassword,
+  Message_TransactionalEmailFailed,
+  Message_TransactionalEmailSuccess,
 } = f_get_server_validation_messages();
 
 /**
@@ -67,7 +71,10 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
   // 3. AUTHENTICATE USER CREDENTIALS LOGIC:
   // check if user credentials are true (retrieved) and compare submitted password with DB password
 
-  if (v_db_userCredentials && (await v_db_userCredentials.m_compare_password(DATA_PASSWORD))) {
+  if (
+    v_db_userCredentials &&
+    (await v_db_userCredentials.m_compare_password(DATA_PASSWORD))
+  ) {
     //
     // generate JWT:
     const generatedJWT = jwt.sign(
@@ -85,12 +92,42 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
 
     // TODO [BACKEND]: send a notification email to the user that he logged in.
 
+    // 4. send a verification approved email to the user email address:
+
+    // set message fields:
+    const { messageFields } = f_set_loggedin_mail_template(
+      v_db_userCredentials.DATA_FIRSTNAME,
+      v_db_userCredentials.DATA_USERNAME,
+      new Date().toLocaleString()
+    );
+
+    // send email:
+    f_send_transactional_email(
+      {
+        // eslint-disable-next-line no-undef
+        from: process.env.V_EMAIL_SERVER_SENDER,
+        to: v_db_userCredentials.DATA_EMAIL_ADDRESS,
+        subject: messageFields.subject,
+        message: messageFields.message,
+        html: messageFields.html,
+      },
+      {
+        failedMessage: Message_TransactionalEmailFailed,
+        succeedMessage: Message_TransactionalEmailSuccess,
+      },
+      response
+    );
+
     // the result:
     response.status(StatusCodes.OK).json(
-      f_set_json_response(`(@${v_db_userCredentials.DATA_USERNAME}) ${Message_UserLoggedIn}`, {
-        userCredentials: v_db_userCredentials.m_get_user_credentials_without_password(),
-        token: generatedJWT,
-      })
+      f_set_json_response(
+        `(@${v_db_userCredentials.DATA_USERNAME}) ${Message_UserLoggedIn}`,
+        {
+          userCredentials:
+            v_db_userCredentials.m_get_user_credentials_without_password(),
+          token: generatedJWT,
+        }
+      )
     );
   }
 
