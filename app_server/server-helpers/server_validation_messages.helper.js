@@ -49,10 +49,18 @@ function f_get_server_validation_messages() {
   // transactional email messages:
   const Message_TransactionalEmailSuccess = `Email sent successfully, please check your inbox or spam or junk folder`;
   const Message_TransactionalEmailFailed = `Email not sent, please try again`;
-  const Message_ResetPasswordEmailSubject = `Password reset request - Ketabi app`;
+
+  // transactional email subject messages:
+  const Message_ResetPasswordEmailRequestSubject = `Password reset requested - Ketabi app`;
   const Message_UpdatePasswordEmailSubject = `Password has been updated - Ketabi app`;
-  const Message_VerifyEmailAddressRequest = `Welcome to Ketabi, Please Verify Your Email Address`;
+  const Message_VerifyEmailAddressEmailRequestSubject = `Welcome to Ketabi, Please Verify Your Email Address`;
   const Message_EmailVerifiedEmailSubject = `Welcome to Ketabi, Your Email has been Verified!`;
+
+  // transactional email main messages:
+  const Message_EmailVerifiedEmailMain = `We are happy to inform you that your email has been verified successfully, enjoy your blogging journey.`;
+  const Message_EmailVerifyEmailRequestMain = `Your account has been successfully created, please click the button below to verify your email address.`;
+  const Message_ResetPasswordEmailRequestMain = `You've asked to reset your password. Please click on the link below to update your password, or ignore this message if you didn't request this change.`;
+  const Message_PasswordUpdatedEmailMain = `Your password has been updated successfully, if you didn't request this change, please contact us immediately.`;
 
   //
   return {
@@ -223,7 +231,7 @@ function f_get_server_validation_messages() {
      * "Password reset request - Ketabi app"
      * ```
      */
-    Message_ResetPasswordEmailSubject,
+    Message_ResetPasswordEmailRequestSubject,
     /**
      * ```
      * "Password has been updated - Ketabi app"
@@ -235,13 +243,37 @@ function f_get_server_validation_messages() {
      * "Welcome to Ketabi, Please Verify Your Email Address"
      * ```
      */
-    Message_VerifyEmailAddressRequest,
+    Message_VerifyEmailAddressEmailRequestSubject,
     /**
      * ```
      * "Welcome to Ketabi, Your Email has been Verified!"
      * ```
      */
     Message_EmailVerifiedEmailSubject,
+    /**
+     * ```
+     * "We are happy to inform you that your email has been verified successfully."
+     * ```
+     */
+    Message_EmailVerifiedEmailMain,
+    /**
+     * ```
+     * "Your account has been successfully created, please click the button below to verify your email address."
+     * ```
+     */
+    Message_EmailVerifyEmailRequestMain,
+    /**
+     * ```
+     * "You've asked to reset your password. Please click on the link below to update your password, or ignore this message if you didn't request this change."
+     * ```
+     */
+    Message_ResetPasswordEmailRequestMain,
+    /**
+     * ```
+     * "Your password has been updated successfully, if you didn't request this change, please contact us immediately."
+     * ```
+     */
+    Message_PasswordUpdatedEmailMain,
   };
 }
 

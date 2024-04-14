@@ -27,6 +27,7 @@ const {
   Message_InternalServerError,
   Message_TransactionalEmailFailed,
   Message_TransactionalEmailSuccess,
+  Message_EmailVerifyEmailRequestMain,
 } = f_get_server_validation_messages();
 
 /**
@@ -133,10 +134,13 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     const V_BASE_URL = f_get_url_base(request);
     const v_verificationLink = `${V_BASE_URL}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
 
+    console.log(v_verificationLink);
+
     // set message fields:
     const { messageFields } = f_set_verify_emailaddress_mail_template(
       v_newUserPayload.DATA_FIRSTNAME,
-      v_verificationLink
+      v_verificationLink,
+      Message_EmailVerifyEmailRequestMain
     );
 
     // send email to the new user:

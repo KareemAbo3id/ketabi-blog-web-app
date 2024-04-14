@@ -5,8 +5,8 @@ import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
-import f_set_reset_password_mail_template from "../../../server-templates/html-templates-functions/set_reset_password_mail.temp.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
+import f_set_reset_password_mail_template from "../../../server-templates/html-templates-functions/set_reset_password_mail.temp.js";
 import f_get_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
   f_check_userCredentials,
@@ -19,6 +19,7 @@ const {
   Message_ResetPasswordLinkSent,
   Message_TransactionalEmailFailed,
   Message_TransactionalEmailSuccess,
+  Message_ResetPasswordEmailRequestMain,
 } = f_get_server_validation_messages();
 
 /**
@@ -81,6 +82,7 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   // set message fields:
   const { messageFields } = f_set_reset_password_mail_template(
     v_db_userCredentials.DATA_FIRSTNAME,
+    Message_ResetPasswordEmailRequestMain,
     V_RESET_PASSWORD_LINK
   );
 

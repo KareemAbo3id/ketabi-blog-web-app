@@ -19,6 +19,7 @@ todo.txt
 !.vscode/extensions.json
 .idea
 .DS_Store
+*.draft.txt
 *.suo
 *.env
 .env

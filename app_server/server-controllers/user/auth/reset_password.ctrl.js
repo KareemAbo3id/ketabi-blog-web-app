@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
+import f_set_password_updated_mail_template from "../../../server-templates/html-templates-functions/set_password_updated_mail.temp.js";
 import { f_check_userCredentials } from "../../../server-helpers/server_validation_funcs.helper.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 
@@ -15,6 +16,7 @@ const {
   Message_PasswordUpdated,
   Message_TransactionalEmailFailed,
   Message_TransactionalEmailSuccess,
+  Message_PasswordUpdatedEmailMain,
 } = f_get_server_validation_messages();
 
 /**
@@ -45,6 +47,8 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
     response.status(StatusCodes.NOT_FOUND);
     throw new Error(`${Message_TokenNotValidExpired} or ${Message_UserNotFound}`);
   }
+
+  // TODO: make sure it works
 
   // check if the token is expired:
   if (v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES < Date.now()) {
@@ -79,13 +83,13 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   // save the update:
   await v_db_userCredentials.save();
 
-  // TODO [BACKEND]: send an email to the user that the password has been changed.
-
   // 6. send a response to the user that the password has been updated:
 
   // set message fields:
   const { messageFields } = f_set_password_updated_mail_template(
-    v_db_userCredentials.DATA_FIRSTNAME
+    v_db_userCredentials.DATA_FIRSTNAME,
+    Message_PasswordUpdatedEmailMain,
+    v_db_userCredentials.updatedAt
   );
 
   // send email:
