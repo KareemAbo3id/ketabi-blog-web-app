@@ -90,9 +90,9 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
     // save JWT in http-cookie:
     f_set_httponly_cookie(response, generatedJWT);
 
-    // TODO [BACKEND]: send a notification email to the user that he logged in.
-
     // 4. send a verification approved email to the user email address:
+
+    // TEST [server] make sure mail is working
 
     // set message fields:
     const { messageFields } = f_set_loggedin_mail_template(

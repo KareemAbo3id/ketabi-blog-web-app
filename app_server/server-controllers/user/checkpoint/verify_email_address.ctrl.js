@@ -52,6 +52,8 @@ const f_control_verify_email_address = asyncHandler(
 
       // 4. send a verification approved email to the user email address:
 
+      // TEST [server] make sure mail is working
+
       // set message fields:
       const { messageFields } = f_set_email_verified_mail_template(
         v_db_userCredentials.DATA_FIRSTNAME,

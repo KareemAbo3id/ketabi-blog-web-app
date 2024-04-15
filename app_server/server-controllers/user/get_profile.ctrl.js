@@ -10,7 +10,7 @@ import f_set_json_response from "../../server-helpers/set_json_response.helper.j
  * @access private
  */
 const f_control_get_profile = asyncHandler(async (request, response) => {
-  // FIXME [BACKEND]: fix get user profile controller
+  // TODO [server] update get user controller
 
   const v_loggedInUserCredentials = {
     ...request.v_db_userCredentials,
@@ -30,7 +30,9 @@ const f_control_get_profile = asyncHandler(async (request, response) => {
   // if user account is deactive:
   else {
     response.status(StatusCodes.UNAUTHORIZED);
-    throw new Error(`user @${v_loggedInUserCredentials.data_username} is deactivated`);
+    throw new Error(
+      `user @${v_loggedInUserCredentials.data_username} is deactivated`
+    );
   }
 });
 

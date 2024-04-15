@@ -81,6 +81,8 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
 
   // 6. send an email to the user with the link:
 
+  // TEST [server] make sure mail is working
+
   // set message fields:
   const { messageFields } = f_set_reset_password_mail_template(
     v_db_userCredentials.DATA_FIRSTNAME,

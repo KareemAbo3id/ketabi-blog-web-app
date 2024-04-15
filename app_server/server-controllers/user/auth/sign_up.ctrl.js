@@ -135,6 +135,8 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
 
     console.log(V_VERIFICATION_LINK);
 
+    // TEST [server] make sure mail is working
+
     // set message fields:
     const { messageFields } = f_set_verify_emailaddress_mail_template(
       v_newUserPayload.DATA_FIRSTNAME,

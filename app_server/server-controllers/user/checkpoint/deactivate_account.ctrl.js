@@ -13,6 +13,7 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
  * @access private
  */
 const f_control_deactivate_account = asyncHandler(async (request, response) => {
+  // TODO [server] update deactivate user account controller
   // get the user credentials from DB:
   const v_db_userCredentials = await Model_UserData.findById(
     request.v_db_userCredentials._id
