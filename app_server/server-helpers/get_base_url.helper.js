@@ -1,14 +1,8 @@
 /**
- * @fileoverview This file contains the server helper functions.
- * @module server_helpers
- * @KareemAbo3id
- */
-
-/**
- * ### Get URL Base
- * Get the base URL of the server.
- * @param {Object} p_request
- * @returns {String} URL Base
+ * ### Returns the base URL of the request.
+ *
+ * @param {Object} p_request - The request object.
+ * @returns {string} The base URL of the request.
  */
 const f_get_url_base = (p_request) => {
   const url_base = `${p_request.protocol}://${p_request.get("host")}`;

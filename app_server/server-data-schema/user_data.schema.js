@@ -1,21 +1,18 @@
 import mongoose from "mongoose";
 
 /**
- * ### The Main User Schema Object
- * @KareemAbo3id
- * @param {String} DATA_EMAIL_ADDRESS
- * @param {String} DATA_USERNAME
- * @param {String} DATA_PASSWORD
- * @param {String} DATA_FIRSTNAME
- * @param {String} DATA_LASTNAME
- * @param {String} DATA_ADDRESS.COUNTRY
- * @param {String} DATA_ADDRESS.CITY
- * @param {Boolean} FLAG_AGREEMENT_CONFIRMED
- * @param {Boolean} FLAG_EMAIL_VERFIED
- * @param {Boolean} FLAG_ACCOUNT_ACTIVATED
- * @param {String} TEMP_RESET_PASSWORD_TOKEN
- * @param {Date} TEMP_RESET_PASSWORD_TOKEN_EXPIRES
- * @returns {Object} Schema_UserData
+ * ### User Data Schema object extends mongoose.Schema
+ *
+ * @property {String} DATA_EMAIL_ADDRESS
+ * @property {String} DATA_USERNAME
+ * @property {String} DATA_PASSWORD
+ * @property {String} DATA_FIRSTNAME
+ * @property {String} DATA_LASTNAME
+ * @property {String} DATA_ADDRESS.COUNTRY
+ * @property {String} DATA_ADDRESS.CITY
+ * @property {Boolean} FLAG_AGREEMENT_CONFIRMED
+ * @property {Boolean} FLAG_EMAIL_VERFIED
+ * @property {Boolean} FLAG_ACCOUNT_ACTIVATED
  */
 const Schema_UserData = mongoose.Schema(
   {

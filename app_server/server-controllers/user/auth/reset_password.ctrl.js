@@ -48,8 +48,6 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
     );
   }
 
-  // TEST [server] make sure mail is working
-
   // check if the token is expired:
   if (v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES < Date.now()) {
     response.status(StatusCodes.BAD_REQUEST);

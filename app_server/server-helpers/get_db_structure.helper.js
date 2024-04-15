@@ -1,9 +1,6 @@
 /**
- * ### Get Database Structure Function
- * get the database structure collection names.
- * ```
- * const { users_collection } = f_get_db_structure();
- * ```
+ * ### Retrieves the database structure.
+ * @returns {Object} The database structure.
  */
 function f_get_db_structure() {
   // users collection:

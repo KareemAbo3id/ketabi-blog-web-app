@@ -77,11 +77,7 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   const V_BASE_URL = f_get_url_base(request);
   const V_RESET_PASSWORD_LINK = `${V_BASE_URL}/user/auth/reset-password/${V_RESET_PASSWORD_TOKEN}`;
 
-  console.log(V_RESET_PASSWORD_LINK);
-
   // 6. send an email to the user with the link:
-
-  // TEST [server] make sure mail is working
 
   // set message fields:
   const { messageFields } = f_set_reset_password_mail_template(

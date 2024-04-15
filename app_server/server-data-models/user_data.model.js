@@ -24,7 +24,10 @@ Schema_UserData.methods.m_get_user_credentials_without_password = function () {
   return v_userCredentials;
 };
 
-// define the user data model:
+/**
+ * ### Represents the user data model.
+ * @typedef {import('mongoose').Model} Model_UserData
+ */
 const Model_UserData = mongoose.model(users_collection, Schema_UserData);
 
 export default Model_UserData; // done.

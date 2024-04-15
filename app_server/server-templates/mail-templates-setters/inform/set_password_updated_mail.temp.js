@@ -47,7 +47,7 @@ function f_set_password_updated_mail_template(
     .readFileSync(transactional_mail_file, "utf-8")
     .replace(/{%v_temp_firstName%}/g, p_recipient_firstName)
     .replace(/{%v_temp_mainMessage%}/g, Message_UpdatedPasswordMain)
-    .replace(/{%v_temp_buttonDiv%}/g, undefined)
+    .replace(/{%v_temp_buttonDiv%}/g, "")
     .replace(
       /{%v_temp_mailNote%}/g,
       fs

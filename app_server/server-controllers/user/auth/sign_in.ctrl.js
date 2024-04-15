@@ -92,13 +92,11 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
 
     // 4. send a verification approved email to the user email address:
 
-    // TEST [server] make sure mail is working
-
     // set message fields:
     const { messageFields } = f_set_loggedin_mail_template(
       v_db_userCredentials.DATA_FIRSTNAME,
       v_db_userCredentials.DATA_USERNAME,
-      new Date().toLocaleString()
+      new Date()
     );
 
     // send email:
@@ -119,16 +117,13 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
     );
 
     // the result:
-    response.status(StatusCodes.OK).json(
-      f_set_json_response(
-        `(@${v_db_userCredentials.DATA_USERNAME}) ${Message_UserLoggedIn}`,
-        {
-          userCredentials:
-            v_db_userCredentials.m_get_user_credentials_without_password(),
-          token: generatedJWT,
-        }
-      )
-    );
+    response
+      .status(StatusCodes.OK)
+      .json(
+        f_set_json_response(
+          `(@${v_db_userCredentials.DATA_USERNAME}) ${Message_UserLoggedIn}`
+        )
+      );
   }
 
   // if some error occurs:

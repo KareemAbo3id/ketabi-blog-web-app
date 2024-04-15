@@ -49,7 +49,7 @@ function f_set_loggedin_mail_template(
       /{%v_temp_mainMessage%}/g,
       Message_LoggedinConfirmMain(p_recipient_username, loggedInAt)
     )
-    .replace(/{%v_temp_buttonDiv%}/g, undefined)
+    .replace(/{%v_temp_buttonDiv%}/g, "")
     .replace(
       /{%v_temp_mailNote%}/g,
       fs

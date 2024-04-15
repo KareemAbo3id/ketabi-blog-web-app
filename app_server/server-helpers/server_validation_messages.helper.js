@@ -1,14 +1,5 @@
 /**
- * @fileoverview This file contains the server validation string messages
- * @module server_validation_messages
- * @KareemAbo3id
- */
-
-/**
  * ### Get server validation messages
- * ```
- * const { EmailNotValid } = f_get_server_validation_messages();
- * ```
  */
 function f_get_server_validation_messages() {
   // email validation messages:

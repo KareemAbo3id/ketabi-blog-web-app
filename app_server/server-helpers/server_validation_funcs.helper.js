@@ -1,10 +1,4 @@
 /**
- * @fileoverview This file contains the server validation functions
- * @module server_validation_funcs
- * @KareemAbo3id
- */
-
-/**
  * ### Validate Email Address
  * Validate the email address by regex pattern.
  * @param {String} p_emailAddress

@@ -1,15 +1,14 @@
-/* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
 import f_set_json_response from "../../server-helpers/set_json_response.helper.js";
 import f_get_url_base from "../../server-helpers/get_base_url.helper.js";
 
 /**
- * ### Error 404 not found API (for HTTP methods) - Control
- * An API endpoint returns Not-Found response.
- * @link /*
- * @method ALL
- * @access public
+ * ### Handles the error 404 (page not found) request.
+ *
+ * @param {Object} request - The request object.
+ * @param {Object} response - The response object.
+ * @returns {Promise<void>} A promise that resolves when the response is sent.
  */
 const f_control_error_404 = asyncHandler(async (request, response) => {
   // the result:

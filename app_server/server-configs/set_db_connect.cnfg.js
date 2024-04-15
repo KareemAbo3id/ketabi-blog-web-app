@@ -2,10 +2,9 @@
 import mongoose from "mongoose";
 
 /**
- * ### MongoDB Set Connection Function
- * Connect to MongoDB server through Mongoose's `connect()` method
- * @param {String} p_mongodb_uri "mongoDB database secret uri"
- * @returns {Promise} Returns a promise that resolves MongoDB connection
+ * ### Establishes a connection to the MongoDB database.
+ * @param {string} p_mongodb_uri - The MongoDB connection URI.
+ * @returns {Promise<void>} A promise that resolves when the connection is established successfully.
  */
 async function f_set_db_connect(p_mongodb_uri) {
   try {
@@ -20,8 +19,8 @@ async function f_set_db_connect(p_mongodb_uri) {
 }
 
 /**
- * ### Mongodb Config Connection Function Based On DB Uri
- * @returns {Promise} Returns a promise that resolves MongoDB connection
+ * ### Configures the database connection based on the environment.
+ * @returns {Promise<void>} A promise that resolves when the database connection is established.
  */
 const f_configer_db_connect = () => {
   process.env.V_EXPRESS_SERVER_ENV === "development"
