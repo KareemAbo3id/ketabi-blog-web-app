@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
@@ -17,8 +16,6 @@ const {
   Message_EmailNotValid,
   Message_UserNotFound,
   Message_ResetPasswordLinkSent,
-  Message_TransactionalEmailFailed,
-  Message_TransactionalEmailSuccess,
 } = f_get_server_validation_messages();
 
 /**
@@ -57,6 +54,7 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
     {
       _id: v_db_userCredentials._id,
     },
+    // eslint-disable-next-line no-undef
     process.env.V_JWT_SECRET,
     {
       expiresIn: "90d",
@@ -94,10 +92,6 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
       subject: messageFields.subject,
       message: messageFields.message,
       html: messageFields.html,
-    },
-    {
-      failedMessage: Message_TransactionalEmailFailed,
-      succeedMessage: Message_TransactionalEmailSuccess,
     },
     response
   );

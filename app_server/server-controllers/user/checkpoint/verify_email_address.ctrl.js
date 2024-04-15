@@ -7,12 +7,8 @@ import f_get_server_validation_messages from "../../../server-helpers/server_val
 import f_set_email_verified_mail_template from "../../../server-templates/mail-templates-setters/inform/set_email_verified_mail.temp.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 
-const {
-  Message_UserNotFound,
-  Message_EmailVerified,
-  Message_TransactionalEmailFailed,
-  Message_TransactionalEmailSuccess,
-} = f_get_server_validation_messages();
+const { Message_UserNotFound, Message_EmailVerified } =
+  f_get_server_validation_messages();
 
 /**
  * ### Verify User Email Address - Control
@@ -68,10 +64,6 @@ const f_control_verify_email_address = asyncHandler(
           subject: messageFields.subject,
           message: messageFields.message,
           html: messageFields.html,
-        },
-        {
-          failedMessage: Message_TransactionalEmailFailed,
-          succeedMessage: Message_TransactionalEmailSuccess,
         },
         response
       );

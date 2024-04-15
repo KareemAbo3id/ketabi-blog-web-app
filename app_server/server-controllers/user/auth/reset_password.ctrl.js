@@ -14,8 +14,6 @@ const {
   Message_TokenNotValidExpired,
   Message_NewPasswordSameAsOldOne,
   Message_PasswordUpdated,
-  Message_TransactionalEmailFailed,
-  Message_TransactionalEmailSuccess,
 } = f_get_server_validation_messages();
 
 /**
@@ -98,10 +96,6 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
       subject: messageFields.subject,
       message: messageFields.message,
       html: messageFields.html,
-    },
-    {
-      failedMessage: Message_TransactionalEmailFailed,
-      succeedMessage: Message_TransactionalEmailSuccess,
     },
     response
   );

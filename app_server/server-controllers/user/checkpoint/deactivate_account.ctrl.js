@@ -1,5 +1,5 @@
-/* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
+import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_delete_httponly_cookie from "../../../server-services/cookies/delete_httponly_cookie.service.js";
@@ -35,6 +35,7 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
       v_db_userCredentials.data_isAccountActive = false;
 
       // destory and re-generate updated JWT and save it in http-cookie:
+      // eslint-disable-next-line no-undef
       f_delete_httponly_cookie(process.env.V_JWT_NAME, response);
 
       // save the update

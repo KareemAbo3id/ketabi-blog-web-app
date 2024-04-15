@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
@@ -16,11 +15,15 @@ const f_handle_protect_private_route = asyncHandler(async (req, res, next) => {
   if (v_token) {
     // token exists and valid:
     try {
-      const v_decodedUserCredentials = jwt.verify(v_token, process.env.V_JWT_SECRET);
-
-      req.v_db_userCredentials = await Model_UserData.findById(v_decodedUserCredentials._id).select(
-        "-DATA_PASSWORD"
+      const v_decodedUserCredentials = jwt.verify(
+        v_token,
+        // eslint-disable-next-line no-undef
+        process.env.V_JWT_SECRET
       );
+
+      req.v_db_userCredentials = await Model_UserData.findById(
+        v_decodedUserCredentials._id
+      ).select("-DATA_PASSWORD");
 
       next();
     } catch (error) {

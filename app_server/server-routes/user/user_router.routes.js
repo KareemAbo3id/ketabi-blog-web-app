@@ -46,7 +46,11 @@ V_USER_ROUTER_GROUP.patch(
   f_control_reactivate_account
 );
 
-V_USER_ROUTER_GROUP.get(UserPath.Profile, f_handle_protect_private_route, f_control_get_profile);
+V_USER_ROUTER_GROUP.get(
+  UserPath.Profile,
+  f_handle_protect_private_route,
+  f_control_get_profile
+);
 
 V_USER_ROUTER_GROUP.patch(
   UserPath.UpdatePassword,
