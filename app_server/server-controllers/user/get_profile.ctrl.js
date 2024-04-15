@@ -13,8 +13,8 @@ const f_control_get_profile = asyncHandler(async (request, response) => {
   // TODO [server] update get user controller
 
   const v_loggedInUserCredentials = {
-    ...request.v_db_userCredentials,
-    data_isAccountActive: request.v_db_userCredentials.data_isAccountActive,
+    ...request.v_get_user_credentials,
+    data_isAccountActive: request.v_get_user_credentials.data_isAccountActive,
   };
 
   // if user account is active:

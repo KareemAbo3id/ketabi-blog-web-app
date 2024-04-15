@@ -6,7 +6,8 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 
-const { Message_UserLoggedOut, Message_UserNotLoggedIn } = f_get_server_validation_messages();
+const { Message_UserLoggedOut, Message_UserNotLoggedIn } =
+  f_get_server_validation_messages();
 
 /**
  * ### Sign Out User By Deleting JWT - Control
@@ -17,22 +18,26 @@ const { Message_UserLoggedOut, Message_UserNotLoggedIn } = f_get_server_validati
 const f_control_sign_out = asyncHandler(async (request, response) => {
   //
   // 1. get the token from http request's cookies:
-  let v_token = request.cookies.jwt;
+  let v_stored_jwt = request.cookies.jwt;
 
   // if there is no token:
-  if (!v_token) {
+  if (!v_stored_jwt) {
     response.status(StatusCodes.UNAUTHORIZED);
     throw new Error(Message_UserNotLoggedIn);
   }
 
   // 2. verify the token:
   // eslint-disable-next-line no-undef
-  const v_decodedUserCredentials = jwt.verify(v_token, process.env.V_JWT_SECRET);
+  const v_decodedUserCredentials = jwt.verify(
+    v_stored_jwt,
+    // eslint-disable-next-line no-undef
+    process.env.V_JWT_SECRET
+  );
 
   // 3. get the username from decoded token:
-  request.v_db_userCredentials = await Model_UserData.findById(v_decodedUserCredentials._id).select(
-    "-DATA_PASSWORD"
-  );
+  request.v_get_user_credentials = await Model_UserData.findById(
+    v_decodedUserCredentials._id
+  ).select("-DATA_PASSWORD");
 
   // 4. delete the http-only cookie:
   f_delete_httponly_cookie(response);
@@ -42,7 +47,7 @@ const f_control_sign_out = asyncHandler(async (request, response) => {
     .status(StatusCodes.CREATED)
     .json(
       f_set_json_response(
-        `(@${request.v_db_userCredentials.DATA_USERNAME}) ${Message_UserLoggedOut}`
+        `(@${request.v_get_user_credentials.DATA_USERNAME}) ${Message_UserLoggedOut}`
       )
     );
 });

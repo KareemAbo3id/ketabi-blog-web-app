@@ -9,19 +9,19 @@ import Model_UserData from "../../server-data-models/user_data.model.js";
  */
 const f_handle_protect_private_route = asyncHandler(async (req, res, next) => {
   // get the token from http request's cookies:
-  let v_token = req.cookies.jwt;
+  let v_stored_jwt = req.cookies.jwt;
 
   // check if there is a token in http request:
-  if (v_token) {
+  if (v_stored_jwt) {
     // token exists and valid:
     try {
       const v_decodedUserCredentials = jwt.verify(
-        v_token,
+        v_stored_jwt,
         // eslint-disable-next-line no-undef
         process.env.V_JWT_SECRET
       );
 
-      req.v_db_userCredentials = await Model_UserData.findById(
+      req.v_get_user_credentials = await Model_UserData.findById(
         v_decodedUserCredentials._id
       ).select("-DATA_PASSWORD");
 

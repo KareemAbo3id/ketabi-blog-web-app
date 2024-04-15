@@ -13,25 +13,25 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
 const f_control_reactivate_account = asyncHandler(async (request, response) => {
   // TODO [server] update re-activate user account controller
   // get the user credentials from DB:
-  const v_db_userCredentials = await Model_UserData.findById(
-    request.v_db_userCredentials._id
+  const v_get_user_credentials = await Model_UserData.findById(
+    request.v_get_user_credentials._id
   );
 
   // REACTIVATE USER FROM DB:
-  if (v_db_userCredentials) {
+  if (v_get_user_credentials) {
     //
     // toggle user account activation state to true:
-    v_db_userCredentials.data_isAccountActive = true;
+    v_get_user_credentials.data_isAccountActive = true;
 
     // save the update
     // const updatedUserCredentials = await userCredentials.save();
-    await v_db_userCredentials.save();
+    await v_get_user_credentials.save();
 
     // the result:
     response.status(StatusCodes.CREATED).json(
       f_set_json_response("user account has been re-activated", {
-        _id: v_db_userCredentials._id,
-        data_isAccountActive: v_db_userCredentials.data_isAccountActive,
+        _id: v_get_user_credentials._id,
+        data_isAccountActive: v_get_user_credentials.data_isAccountActive,
       })
     );
   }

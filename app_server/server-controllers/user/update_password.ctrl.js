@@ -16,18 +16,18 @@ const f_control_update_password = asyncHandler(
     // TODO [server] update user password controller
 
     // get the user credentials from DB:
-    const v_db_userCredentials = await Model_UserData.findById(
-      request.v_db_userCredentials._id
+    const v_get_user_credentials = await Model_UserData.findById(
+      request.v_get_user_credentials._id
     ).select("+data_password");
 
     const v_isDbPasswordEqualCurrentPassword = await bcrypt.compare(
       request.body.data_password,
-      v_db_userCredentials.data_password
+      v_get_user_credentials.data_password
     );
 
     // UPDATE USER PASSWORD:
     // check if user credentials are true (retrieved) and assign submitted user new password to DB password:
-    if (v_db_userCredentials) {
+    if (v_get_user_credentials) {
       //
       // if user assign a new password equals to the original DB password:
       if (v_isDbPasswordEqualCurrentPassword) {
@@ -41,11 +41,12 @@ const f_control_update_password = asyncHandler(
           if (request.body.data_password !== request.body.data_newPassword) {
             //
             // assign user new password to existed one:
-            v_db_userCredentials.data_password = request.body.data_newPassword;
+            v_get_user_credentials.data_password =
+              request.body.data_newPassword;
 
             // save the update
             // const updatedUserCredentials = await userCredentials.save();
-            await v_db_userCredentials.save();
+            await v_get_user_credentials.save();
 
             // the result:
             response

@@ -26,33 +26,33 @@ const f_control_verify_email_address = asyncHandler(
     // 2. SERVER VALIDATION:
 
     // find user credentials in DB:
-    const v_db_userCredentials = await Model_UserData.findById({ _id }).select(
-      "-DATA_PASSWORD"
-    );
+    const v_get_user_credentials = await Model_UserData.findById({
+      _id,
+    }).select("-DATA_PASSWORD");
 
     // check if user credentials are true (retrieved):
-    if (!f_check_userCredentials(v_db_userCredentials)) {
+    if (!f_check_userCredentials(v_get_user_credentials)) {
       response.status(StatusCodes.NOT_FOUND);
       throw new Error(Message_UserNotFound);
     }
 
     // check if email address is not verified:
-    if (!v_db_userCredentials.FLAG_EMAIL_VERFIED) {
+    if (!v_get_user_credentials.FLAG_EMAIL_VERFIED) {
       // 3. update user email address verification status:
 
       // update the user email address verification status in the database:
-      v_db_userCredentials.FLAG_EMAIL_VERFIED = true;
+      v_get_user_credentials.FLAG_EMAIL_VERFIED = true;
 
       // save the updated user data:
-      await v_db_userCredentials.save();
+      await v_get_user_credentials.save();
 
       // 4. send a verification approved email to the user email address:
 
       // set message fields:
       const { messageFields } = f_set_email_verified_mail_template(
-        v_db_userCredentials.DATA_FIRSTNAME,
-        v_db_userCredentials.DATA_USERNAME,
-        v_db_userCredentials.createdAt
+        v_get_user_credentials.DATA_FIRSTNAME,
+        v_get_user_credentials.DATA_USERNAME,
+        v_get_user_credentials.createdAt
       );
 
       // send email:
@@ -60,7 +60,7 @@ const f_control_verify_email_address = asyncHandler(
         {
           // eslint-disable-next-line no-undef
           from: process.env.V_EMAIL_SERVER_SENDER,
-          to: v_db_userCredentials.DATA_EMAIL_ADDRESS,
+          to: v_get_user_credentials.DATA_EMAIL_ADDRESS,
           subject: messageFields.subject,
           message: messageFields.message,
           html: messageFields.html,
@@ -71,7 +71,7 @@ const f_control_verify_email_address = asyncHandler(
       // the result:
       response.status(StatusCodes.CREATED).json(
         f_set_json_response(Message_EmailVerified, {
-          FLAG_EMAIL_VERFIED: v_db_userCredentials.FLAG_EMAIL_VERFIED,
+          FLAG_EMAIL_VERFIED: v_get_user_credentials.FLAG_EMAIL_VERFIED,
         })
       );
     }

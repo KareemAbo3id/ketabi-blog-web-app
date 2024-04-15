@@ -14,25 +14,26 @@ const f_control_update_profile = asyncHandler(async (request, response) => {
   // TODO [server] update user profile controller
 
   // get the user credentials from DB:
-  const v_db_userCredentials = await Model_UserData.findById(
-    request.v_db_userCredentials._id
+  const v_get_user_credentials = await Model_UserData.findById(
+    request.v_get_user_credentials._id
   );
 
   // UPDATE USER DATA:
   // check if user credentials are true (retrieved) and assign submitted user credentials to DB credentials:
-  if (v_db_userCredentials) {
+  if (v_get_user_credentials) {
     // assign user credentials to existed ones:
-    v_db_userCredentials.data_firstName =
-      request.body.data_firstName || v_db_userCredentials.data_firstName;
+    v_get_user_credentials.data_firstName =
+      request.body.data_firstName || v_get_user_credentials.data_firstName;
 
-    v_db_userCredentials.data_lastName =
-      request.body.data_lastName || v_db_userCredentials.data_lastName;
+    v_get_user_credentials.data_lastName =
+      request.body.data_lastName || v_get_user_credentials.data_lastName;
 
-    v_db_userCredentials.data_emailAddress =
-      request.body.data_emailAddress || v_db_userCredentials.data_emailAddress;
+    v_get_user_credentials.data_emailAddress =
+      request.body.data_emailAddress ||
+      v_get_user_credentials.data_emailAddress;
 
     // save the update:
-    await v_db_userCredentials.save();
+    await v_get_user_credentials.save();
 
     // the result:
     response

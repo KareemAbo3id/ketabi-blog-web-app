@@ -34,12 +34,12 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   // 3. SERVER VALIDATION:
 
   // find user credentials in DB:
-  const v_db_userCredentials = await Model_UserData.findOne({
+  const v_get_user_credentials = await Model_UserData.findOne({
     TEMP_RESET_PASSWORD_TOKEN,
   }).select("+DATA_PASSWORD");
 
   // check if user credentials are true (retrieved):
-  if (!f_check_userCredentials(v_db_userCredentials)) {
+  if (!f_check_userCredentials(v_get_user_credentials)) {
     response.status(StatusCodes.NOT_FOUND);
     throw new Error(
       `${Message_TokenNotValidExpired} or ${Message_UserNotFound}`
@@ -47,7 +47,7 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   }
 
   // check if the token is expired:
-  if (v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES < Date.now()) {
+  if (v_get_user_credentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES < Date.now()) {
     response.status(StatusCodes.BAD_REQUEST);
     throw new Error(Message_TokenNotValidExpired);
   }
@@ -61,7 +61,7 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   // check if DATA_NEW_PASSWORD is equal to DATA_PASSWORD:
   const v_isDbPasswordEqualCurrentPassword = await bcrypt.compare(
     DATA_NEW_PASSWORD,
-    v_db_userCredentials.DATA_PASSWORD
+    v_get_user_credentials.DATA_PASSWORD
   );
 
   if (v_isDbPasswordEqualCurrentPassword) {
@@ -70,21 +70,21 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
   }
 
   // 4. update the user password in the database:
-  v_db_userCredentials.DATA_PASSWORD = DATA_NEW_PASSWORD;
+  v_get_user_credentials.DATA_PASSWORD = DATA_NEW_PASSWORD;
 
   // 5. delete the token and token expiry time from the database:
-  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN = undefined;
-  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES = undefined;
+  v_get_user_credentials.TEMP_RESET_PASSWORD_TOKEN = undefined;
+  v_get_user_credentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES = undefined;
 
   // save the update:
-  await v_db_userCredentials.save();
+  await v_get_user_credentials.save();
 
   // 6. send a response to the user that the password has been updated:
 
   // set message fields:
   const { messageFields } = f_set_password_updated_mail_template(
-    v_db_userCredentials.DATA_FIRSTNAME,
-    v_db_userCredentials.updatedAt
+    v_get_user_credentials.DATA_FIRSTNAME,
+    v_get_user_credentials.updatedAt
   );
 
   // send email:
@@ -92,7 +92,7 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
     {
       // eslint-disable-next-line no-undef
       from: process.env.V_EMAIL_SERVER_SENDER,
-      to: v_db_userCredentials.DATA_EMAIL_ADDRESS,
+      to: v_get_user_credentials.DATA_EMAIL_ADDRESS,
       subject: messageFields.subject,
       message: messageFields.message,
       html: messageFields.html,

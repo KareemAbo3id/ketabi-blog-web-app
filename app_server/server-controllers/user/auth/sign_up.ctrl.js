@@ -73,23 +73,23 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   }
 
   // find user credentials in DB, by email:
-  const v_db_userCredentials_email = await Model_UserData.findOne({
+  const v_get_user_credentials_email = await Model_UserData.findOne({
     DATA_EMAIL_ADDRESS,
   });
 
   // find user credentials in DB, by username:
-  const v_db_userCredentials_username = await Model_UserData.findOne({
+  const v_get_user_credentials_username = await Model_UserData.findOne({
     DATA_USERNAME,
   });
 
   // check if user credentials are true (retrieved), by email:
-  if (f_check_userCredentials(v_db_userCredentials_email)) {
+  if (f_check_userCredentials(v_get_user_credentials_email)) {
     response.status(StatusCodes.CONFLICT);
     throw new Error(Message_EmailExists);
   }
 
   // check if user credentials are true (retrieved), by username:
-  if (f_check_userCredentials(v_db_userCredentials_username)) {
+  if (f_check_userCredentials(v_get_user_credentials_username)) {
     response.status(StatusCodes.CONFLICT);
     throw new Error(Message_UsernameExists);
   }
@@ -111,7 +111,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   if (await v_newUserPayload) {
     //
     // generate JWT make it wait for the user to be created:
-    const generatedJWT = jwt.sign(
+    const v_generated_jwt = jwt.sign(
       {
         _id: v_newUserPayload._id,
       },
@@ -123,7 +123,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     );
 
     // save JWT in http-cookie:
-    f_set_httponly_cookie(response, generatedJWT);
+    f_set_httponly_cookie(response, v_generated_jwt);
 
     // 4. send welcome email to the new user, and a link to verify the email:
 

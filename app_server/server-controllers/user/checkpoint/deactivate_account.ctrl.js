@@ -15,24 +15,24 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
 const f_control_deactivate_account = asyncHandler(async (request, response) => {
   // TODO [server] update deactivate user account controller
   // get the user credentials from DB:
-  const v_db_userCredentials = await Model_UserData.findById(
-    request.v_db_userCredentials._id
+  const v_get_user_credentials = await Model_UserData.findById(
+    request.v_get_user_credentials._id
   ).select("+data_password");
 
   const v_passwordsMatchFlag = await bcrypt.compare(
     request.body.data_password,
-    v_db_userCredentials.data_password
+    v_get_user_credentials.data_password
   );
 
   // DELETE USER FROM DB:
   // check if user credentials are true (retrieved) and compare submitted password:
-  if (v_db_userCredentials) {
+  if (v_get_user_credentials) {
     //
     // if user assign a new password equals to the original DB password:
     if (v_passwordsMatchFlag) {
       //
       // toggle user account activation state to false:
-      v_db_userCredentials.data_isAccountActive = false;
+      v_get_user_credentials.data_isAccountActive = false;
 
       // destory and re-generate updated JWT and save it in http-cookie:
       // eslint-disable-next-line no-undef
@@ -40,7 +40,7 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
 
       // save the update
       // const updatedUserCredentials = await userCredentials.save();
-      await v_db_userCredentials.save();
+      await v_get_user_credentials.save();
 
       // the result:
       response

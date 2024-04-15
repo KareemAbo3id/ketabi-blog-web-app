@@ -39,12 +39,12 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   }
 
   // find user credentials in DB:
-  const v_db_userCredentials = await Model_UserData.findOne({
+  const v_get_user_credentials = await Model_UserData.findOne({
     DATA_EMAIL_ADDRESS,
   }).select("-DATA_PASSWORD");
 
   // check if user credentials are true (retrieved):
-  if (!f_check_userCredentials(v_db_userCredentials)) {
+  if (!f_check_userCredentials(v_get_user_credentials)) {
     response.status(StatusCodes.NOT_FOUND);
     throw new Error(Message_UserNotFound);
   }
@@ -52,7 +52,7 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   // 3. create a token for reset password:
   const V_RESET_PASSWORD_TOKEN = jwt.sign(
     {
-      _id: v_db_userCredentials._id,
+      _id: v_get_user_credentials._id,
     },
     // eslint-disable-next-line no-undef
     process.env.V_JWT_SECRET,
@@ -62,14 +62,14 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
   );
 
   // 4. save the token in the database:
-  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN = V_RESET_PASSWORD_TOKEN;
+  v_get_user_credentials.TEMP_RESET_PASSWORD_TOKEN = V_RESET_PASSWORD_TOKEN;
 
   // set expiry time for the token to 1 hour:
-  v_db_userCredentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES =
+  v_get_user_credentials.TEMP_RESET_PASSWORD_TOKEN_EXPIRES =
     Date.now() + 60 * 60 * 1000; // 1 hour
 
   // save the update:
-  await v_db_userCredentials.save();
+  await v_get_user_credentials.save();
 
   // 5. generate a link with the token in the URL:
   const V_BASE_URL = f_get_url_base(request);
@@ -79,7 +79,7 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
 
   // set message fields:
   const { messageFields } = f_set_reset_password_mail_template(
-    v_db_userCredentials.DATA_FIRSTNAME,
+    v_get_user_credentials.DATA_FIRSTNAME,
     V_RESET_PASSWORD_LINK
   );
 
