@@ -19,11 +19,52 @@ const {
 } = f_get_server_validation_messages();
 
 /**
- * ### Forget Password - Control
- * Send a reset password link to the user's email address.
- * @endpoint /user/auth/forget-password
- * @method POST
- * @access public
+ * @swagger
+ * /api/forgot-password:
+ *   post:
+ *     summary: Send reset password link to user's email inbox
+ *     description: take user email address from the request body, validate it, create a token, save it in the database, generate a link with the token in the URL, send an email to the user with the link
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              DATA_EMAIL_ADDRESS:
+ *                type: string
+ *                format: email
+ *     responses:
+ *       "201":
+ *         description: Reset password link sent
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Reset password link sent"
+ *       "400":
+ *         description: Email not valid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Email not valid"
+ *       "404":
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User not found"
  */
 const f_control_forget_password = asyncHandler(async (request, response) => {
   //

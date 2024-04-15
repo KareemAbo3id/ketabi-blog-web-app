@@ -1,6 +1,5 @@
 /**
  * ### Retrieves the database structure.
- * @returns {Object} The database structure.
  */
 function f_get_db_structure() {
   // users collection:

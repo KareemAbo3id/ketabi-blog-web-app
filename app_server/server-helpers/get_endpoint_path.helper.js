@@ -1,9 +1,15 @@
 /**
  * ### Get Endpoint Path Function
  * get an endpoint router link from well organized links object.
- * @returns {Object} The endpoint path object.
  */
 function f_get_endpoint_path() {
+  const AppApiDocsPath = {
+    /**
+     * @link /development/api-documentation
+     */
+    ROOT: "/development/api-documentation",
+  };
+
   const AppPath = {
     /**
      * @link /
@@ -75,14 +81,12 @@ function f_get_endpoint_path() {
     SignUp: `${AppPath.AUTH}/sign-up`,
 
     /**
-     * @link /auth/reset-password
+     * @link /auth/forget-password
      */
     ForgetPassword: `${AppPath.AUTH}/forget-password`,
 
     /**
-     * @link /auth/reset-password
-     * @param {string} userId
-     * @param {string} tokenExtension
+     * @link /auth/reset-password/:TEMP_RESET_PASSWORD_TOKEN
      */
     ResetPassword: `${AppPath.AUTH}/reset-password/:TEMP_RESET_PASSWORD_TOKEN`,
   };
@@ -94,14 +98,14 @@ function f_get_endpoint_path() {
     ROOT: AppPath.CHECKPOINT,
 
     /**
-     * @link /checkpoint/verify-email-address
+     * @link /checkpoint/verify-email-address/:id
      */
     VerifyEmailAddress: `${AppPath.CHECKPOINT}/verify-email-address/:id`,
 
     /**
-     * @link /checkpoint/deactivate-account
+     * @link /checkpoint/deactivate-account/:id
      */
-    DeactivateAccount: `${AppPath.CHECKPOINT}/deactivate-account?id=:_id`,
+    DeactivateAccount: `${AppPath.CHECKPOINT}/deactivate-account/:id`,
 
     /**
      * @link /checkpoint/reactivate-account
@@ -113,50 +117,46 @@ function f_get_endpoint_path() {
   return {
     /**
      * ```
-     * AppPath: {
-     *   ROOT: "/";
-     *   ERROR: "*";
-     *   USER: "/user";
-     *   CHECKPOINT: "/checkpoint";
-     *   AUTH: "/auth";
-     * }
+     * { ROOT: "/development/api-documentation" }
+     * ```
+     */
+    AppApiDocsPath,
+    /**
+     * ```
+     * { ROOT: "/",
+     * ERROR: "*",
+     * USER: "/user",
+     * CHECKPOINT: "/checkpoint",
+     * AUTH: "/auth" }
      * ```
      */
     AppPath,
-
     /**
      * ```
-     * UserPath: {
-     * ROOT: "/user",
+     * { ROOT: "/user",
      * Profile: "/profile",
      * UpdateProfile: "/update-profile",
-     * UpdatePassword: "/update-password",
-     * }
+     * UpdatePassword: "/update-password" }
      * ```
      */
     UserPath,
-
     /**
      * ```
-     * AuthPath: {
-     * ROOT: "/auth",
+     * { ROOT: "/auth",
      * SignIn: "/auth/sign-in",
      * SignOut: "/auth/sign-out",
      * SignUp: "/auth/sign-up",
-     * ResetPassword: "/auth/reset-password",
-     * }
+     * ForgetPassword: "/auth/forget-password",
+     * ResetPassword: "/auth/reset-password/:TEMP_RESET_PASSWORD_TOKEN" }
      * ```
      */
     AuthPath,
-
     /**
      * ```
-     * CheckpointPath: {
-     * ROOT: "/checkpoint",
-     * VerifyEmailAddress: "/checkpoint/verify-email-address",
-     * DeactivateAccount: "/checkpoint/deactivate-account",
-     * ReactivateAccount: "/checkpoint/reactivate-account",
-     * }
+     * { ROOT: "/checkpoint",
+     * VerifyEmailAddress: "/checkpoint/verify-email-address/:id",
+     * DeactivateAccount: "/checkpoint/deactivate-account/:id",
+     * ReactivateAccount: "/checkpoint/reactivate-account" }
      * ```
      */
     CheckpointPath,

@@ -17,6 +17,7 @@ const V_USER_ROUTER_GROUP = express.Router(); // create express router
 const { UserPath, AuthPath, CheckpointPath } = f_get_endpoint_path();
 
 // PUBLIC ACCESS ENDPOINTS:
+
 V_USER_ROUTER_GROUP.post(AuthPath.SignIn, f_control_sign_in);
 
 V_USER_ROUTER_GROUP.post(AuthPath.SignUp, f_control_sign_up);

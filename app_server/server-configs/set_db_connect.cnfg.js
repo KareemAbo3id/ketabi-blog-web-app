@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 /**
  * ### Establishes a connection to the MongoDB database.
  * @param {string} p_mongodb_uri - The MongoDB connection URI.
- * @returns {Promise<void>} A promise that resolves when the connection is established successfully.
  */
 async function f_set_db_connect(p_mongodb_uri) {
   try {
@@ -19,7 +18,6 @@ async function f_set_db_connect(p_mongodb_uri) {
 
 /**
  * ### Configures the database connection based on the environment.
- * @returns {Promise<void>} A promise that resolves when the database connection is established.
  */
 const f_configer_db_connect = () => {
   // eslint-disable-next-line no-undef

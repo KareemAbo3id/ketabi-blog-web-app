@@ -2,7 +2,6 @@
  * ### Validate Email Address
  * Validate the email address by regex pattern.
  * @param {String} p_emailAddress
- * @returns {Boolean}
  */
 const f_validate_email_address = (p_emailAddress) => {
   if (
@@ -19,7 +18,6 @@ const f_validate_email_address = (p_emailAddress) => {
  * ### Validate Password
  * Validate the password by length and regex pattern.
  * @param {String} p_password
- * @returns {Boolean}
  */
 const f_validate_password = (p_password) => {
   let passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
@@ -39,7 +37,6 @@ const f_validate_password = (p_password) => {
  * ### Validate Username
  * Validate the username by length.
  * @param {String} p_username
- * @returns {Boolean}
  */
 const f_validate_username = (p_username) => {
   let usernameMax = 255;
@@ -59,7 +56,6 @@ const f_validate_username = (p_username) => {
  * ### Check if userCredentials exists in DB
  * Check if the user credentials exist in the database.
  * @param {Object} p_userCredentials
- * @returns {Boolean}
  */
 const f_check_userCredentials = (p_userCredentials) => {
   return p_userCredentials ? true : false;
