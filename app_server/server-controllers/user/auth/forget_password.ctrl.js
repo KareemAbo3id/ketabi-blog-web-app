@@ -19,52 +19,11 @@ const {
 } = f_get_server_validation_messages();
 
 /**
- * @swagger
- * /api/forgot-password:
- *   post:
- *     summary: Send reset password link to user's email inbox
- *     description: take user email address from the request body, validate it, create a token, save it in the database, generate a link with the token in the URL, send an email to the user with the link
- *     requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              DATA_EMAIL_ADDRESS:
- *                type: string
- *                format: email
- *     responses:
- *       "201":
- *         description: Reset password link sent
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Reset password link sent"
- *       "400":
- *         description: Email not valid
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Email not valid"
- *       "404":
- *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "User not found"
+ * ### Forget Password - Control
+ * Send a reset password link to the user's email address.
+ * @endpoint /user/auth/forget-password
+ * @method POST
+ * @access public
  */
 const f_control_forget_password = asyncHandler(async (request, response) => {
   //
@@ -144,3 +103,42 @@ const f_control_forget_password = asyncHandler(async (request, response) => {
 });
 
 export default f_control_forget_password;
+
+/**
+ * @swagger
+ * /user/auth/forget-password:
+ *   post:
+ *     summary: Forget password.
+ *     description: Forget password, send an email with a link to reset the password.
+ *     tags:
+ *       - User APIs
+ *     requestBody:
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - DATA_EMAIL_ADDRESS
+ *             properties:
+ *               DATA_EMAIL_ADDRESS:
+ *                 description: "User email address: validation: accepted email format: user@domain.com"
+ *                 type: string
+ *                 example: "jhonduo@mail.com"
+ *     responses:
+ *       "201":
+ *         description: "_CREATED_ Reset password link sent to the user email address, temporary token saved in MongoDB model"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 TEMP_RESET_PASSWORD_TOKEN:
+ *                   type: string
+ *                 TEMP_RESET_PASSWORD_TOKEN_EXPIRES:
+ *                   type: string
+ *                   format: date-time
+ *       "400":
+ *         description: "_BAD_REQUEST_ Email not valid"
+ *       "404":
+ *         description: "_NOT_FOUND_ User not found"
+ */

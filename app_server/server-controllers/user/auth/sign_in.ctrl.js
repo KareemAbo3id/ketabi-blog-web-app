@@ -133,4 +133,46 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
   }
 });
 
-export default f_control_sign_in; // done.
+export default f_control_sign_in;
+
+/**
+ * @swagger
+ * /user/auth/sign-in:
+ *   post:
+ *     summary: Sign in the user.
+ *     description: Take user email and password, validate them, sign in the user.
+ *     tags:
+ *       - User APIs
+ *     requestBody:
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - DATA_EMAIL_ADDRESS
+ *               - DATA_PASSWORD
+ *             properties:
+ *               DATA_EMAIL_ADDRESS:
+ *                 description: "User email address: validation: accepted email format: user@domain.com"
+ *                 type: string
+ *                 example: "jhonduo@mail.com"
+ *               DATA_PASSWORD:
+ *                 description: "User password: validation: at least 6 characters, at least 1 uppercase, 1 lowercase, 1 number, 1 special character"
+ *                 type: string
+ *                 example: "123456"
+ *     responses:
+ *       "200":
+ *         description: "_OK_ User logged in successfully, JWT generated and saved in http-only cookie"
+ *         headers:
+ *           Set-Cookie:
+ *             description: "_EXAMPLE_: jwt=a3fWa71f8dfv4bhgf5; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly"
+ *             schema:
+ *               type: string
+ *               required: true
+ *       "400":
+ *         description: "_BAD_REQUEST_ Email or password not valid"
+ *       "404":
+ *         description: "_NOT_FOUND_ User not found"
+ *       "401":
+ *         description: "_UNAUTHORIZED_ Wrong email or password"
+ */

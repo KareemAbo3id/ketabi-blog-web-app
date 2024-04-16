@@ -18,11 +18,11 @@ import f_set_server_listen from "./server-configs/set_server_listen.cnfg.js";
 import f_get_endpoint_path from "./server-helpers/get_endpoint_path.helper.js";
 import V_USER_ROUTER_GROUP from "./server-routes/user/user_router.routes.js";
 import V_ERROR404_ROUTER from "./server-routes/error404/error404_router.routes.js";
-import f_configer_db_connect from "./server-configs/set_db_connect.cnfg.js";
+// import f_configer_db_connect from "./server-configs/set_db_connect.cnfg.js";
 
 const V_APP = express();
 dotenv.config();
-f_configer_db_connect();
+// f_configer_db_connect();
 V_APP.use(cors());
 V_APP.use(express.json());
 V_APP.use(express.urlencoded({ extended: true }));

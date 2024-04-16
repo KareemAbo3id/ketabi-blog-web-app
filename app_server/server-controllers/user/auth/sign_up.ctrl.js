@@ -166,4 +166,124 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   }
 });
 
-export default f_control_sign_up; // done.
+export default f_control_sign_up;
+
+/**
+ * @swagger
+ * /user/auth/sign-up:
+ *   post:
+ *     summary: Create a new user account.
+ *     description: Take user credentials payload object, validate it, create a new user, and send a welcome email.
+ *     tags:
+ *       - User APIs
+ *     requestBody:
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - DATA_EMAIL_ADDRESS
+ *               - DATA_USERNAME
+ *               - DATA_FIRSTNAME
+ *               - DATA_LASTNAME
+ *               - DATA_PASSWORD
+ *               - DATA_PASSWORD_CONFIRM
+ *               - FLAG_AGREEMENT_CONFIRMED
+ *             properties:
+ *               DATA_EMAIL_ADDRESS:
+ *                 description: "User email address: validation: accepted email format: user@domain.com"
+ *                 type: string
+ *                 example: "jhonduo@mail.com"
+ *               DATA_USERNAME:
+ *                 description: "User username: validation: accepted username format: 'a-z', 'A-Z', '0-9', '_', '-', '.'"
+ *                 type: string
+ *                 example: "jhon_duo"
+ *               DATA_FIRSTNAME:
+ *                 description: "User first name"
+ *                 type: string
+ *                 example: "Jhon"
+ *               DATA_LASTNAME:
+ *                 description: "User last name"
+ *                 type: string
+ *                 example: "Duo"
+ *               DATA_PASSWORD:
+ *                 description: "User password: validation: at least 6 characters, at least 1 uppercase, 1 lowercase, 1 number, 1 special character"
+ *                 type: string
+ *                 example: "123456"
+ *               DATA_PASSWORD_CONFIRM:
+ *                 description: "User password confirmation: validation: must match 'DATA_PASSWORD' field"
+ *                 type: string
+ *                 example: "123456"
+ *               FLAG_AGREEMENT_CONFIRMED:
+ *                 description: User agreement confirmed
+ *                 type: boolean
+ *                 example: true
+ *     responses:
+ *       "201":
+ *         description: "_CREATED_ User created, saved in MongoDB model and JWT saved in http-only cookie."
+ *         headers:
+ *           Set-Cookie:
+ *             description: "_EXAMPLE_: jwt=a3fWa71f8dfv4bhgf5; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly"
+ *             schema:
+ *               type: string
+ *               required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: integer
+ *                   format: ObjectID
+ *                   description: The user ID
+ *                   example: 5f7f1f6b46b4f00f9c8b4b2b
+ *                 DATA_EMAIL_ADDRESS:
+ *                   type: string
+ *                   example: foo@bar.com
+ *                 DATA_USERNAME:
+ *                   type: string
+ *                   example: foo_bar
+ *                 DATA_PASSWORD:
+ *                   type: string
+ *                   example: 07dbb6e6832da0841dd79701200e4b179f1a94a7b3dd26f612817f3c03117434
+ *                 DATA_FIRSTNAME:
+ *                   type: string
+ *                   example: John
+ *                 DATA_LASTNAME:
+ *                   type: string
+ *                   example: Doe
+ *                 DATA_ADDRESS:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       COUNTRY:
+ *                         type: string
+ *                         example: Palestine
+ *                       CITY:
+ *                         type: string
+ *                         example: Gaza
+ *                 FLAG_AGREEMENT_CONFIRMED:
+ *                   type: boolean
+ *                   example: true
+ *                 FLAG_EMAIL_VERFIED:
+ *                   type: boolean
+ *                   example: false
+ *                 FLAG_ACCOUNT_ACTIVATED:
+ *                   type: boolean
+ *                   example: true
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2020-10-08T17:00:00.000Z
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *                   example: 2020-10-08T17:00:00.000Z
+ *       "400":
+ *         description: "_BAD_REQUEST_ Invalid input: email not valid, password not valid, username not valid, or passwords not match"
+ *       "409":
+ *         description: "_CONFLICT_ Email or username already exists"
+ *       "500":
+ *         description: "_INTERNAL_SERVER_ERROR_ Some error occurred while creating the user"
+ */

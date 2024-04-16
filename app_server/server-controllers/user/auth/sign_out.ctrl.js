@@ -52,4 +52,19 @@ const f_control_sign_out = asyncHandler(async (request, response) => {
     );
 });
 
-export default f_control_sign_out; // done.
+export default f_control_sign_out;
+
+/**
+ * @swagger
+ * /user/auth/sign-out:
+ *   post:
+ *     summary: Sign out the user.
+ *     description: Sign out the user, delete the JWT from http-only cookie.
+ *     tags:
+ *       - User APIs
+ *     responses:
+ *       "201":
+ *         description: "_CREATED_ User logged out successfully, JWT deleted from http-only cookie"
+ *       "401":
+ *         description: "_UNAUTHORIZED_ User not logged in"
+ */

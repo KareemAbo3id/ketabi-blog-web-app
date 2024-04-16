@@ -106,4 +106,45 @@ const f_control_reset_password = asyncHandler(async (request, response) => {
     .json(f_set_json_response(Message_PasswordUpdated));
 });
 
-export default f_control_reset_password; // done.
+export default f_control_reset_password;
+
+/**
+ * @swagger
+ * /user/auth/reset-password/:TEMP_RESET_PASSWORD_TOKEN:
+ *   patch:
+ *     summary: Reset password.
+ *     description: Take temporary token from URL params, new password and confirm new password from request body, validate them, reset the password, and send an email to the user.
+ *     tags:
+ *       - User APIs
+ *     parameters:
+ *       - in: path
+ *         name: TEMP_RESET_PASSWORD_TOKEN
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Temporary token to reset the password
+ *     requestBody:
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - DATA_NEW_PASSWORD
+ *               - DATA_CONFIRM_NEW_PASSWORD
+ *             properties:
+ *               DATA_NEW_PASSWORD:
+ *                 description: "User password: validation: at least 6 characters, at least 1 uppercase, 1 lowercase, 1 number, 1 special character"
+ *                 type: string
+ *                 example: "123456"
+ *               DATA_CONFIRM_NEW_PASSWORD:
+ *                 description: "User confirm password: validation: at least 6 characters, at least 1 uppercase, 1 lowercase, 1 number, 1 special character"
+ *                 type: string
+ *                 example: "123456"
+ *     responses:
+ *       "201":
+ *         description: "_CREATED_ Password updated successfully, email sent to the user email address"
+ *       "400":
+ *         description: "_BAD_REQUEST_ Client passwords not match or token expired or new password same as old one"
+ *       "404":
+ *         description: "_NOT_FOUND_ User not found or token expired"
+ */
