@@ -85,3 +85,5 @@ const f_control_verify_email_address = asyncHandler(
 );
 
 export default f_control_verify_email_address;
+
+// TODO [server] set swagger docs for this API f_control_verify_email_address:

@@ -11,7 +11,7 @@ import f_set_json_response from "../../server-helpers/set_json_response.helper.j
  * @access private
  */
 const f_control_update_profile = asyncHandler(async (request, response) => {
-  // TODO [server] update user profile controller
+  // FIX [server] update user profile controller
 
   // get the user credentials from DB:
   const v_get_user_credentials = await Model_UserData.findById(
@@ -49,3 +49,5 @@ const f_control_update_profile = asyncHandler(async (request, response) => {
 });
 
 export default f_control_update_profile;
+
+// TODO [server] set swagger docs for this API f_control_update_profile

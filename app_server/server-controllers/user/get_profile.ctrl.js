@@ -10,7 +10,7 @@ import f_set_json_response from "../../server-helpers/set_json_response.helper.j
  * @access private
  */
 const f_control_get_profile = asyncHandler(async (request, response) => {
-  // TODO [server] update get user controller
+  // FIX [server] update get user controller
 
   const v_loggedInUserCredentials = {
     ...request.v_get_user_credentials,
@@ -37,3 +37,5 @@ const f_control_get_profile = asyncHandler(async (request, response) => {
 });
 
 export default f_control_get_profile;
+
+// TODO [server] set swagger docs for this API f_control_get_profile

@@ -8,6 +8,7 @@ import Model_UserData from "../../server-data-models/user_data.model.js";
  * Protect routers from access only when the user is logged in.
  */
 const f_handle_protect_private_route = asyncHandler(async (req, res, next) => {
+  // FIX [server] protect private route middleware
   // get the token from http request's cookies:
   let v_stored_jwt = req.cookies.jwt;
 
@@ -40,3 +41,5 @@ const f_handle_protect_private_route = asyncHandler(async (req, res, next) => {
 });
 
 export default f_handle_protect_private_route;
+
+// TODO [server] set swagger docs for this middleware f_handle_protect_private_route

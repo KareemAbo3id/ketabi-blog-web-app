@@ -13,7 +13,7 @@ import f_set_json_response from "../../../server-helpers/set_json_response.helpe
  * @access private
  */
 const f_control_deactivate_account = asyncHandler(async (request, response) => {
-  // TODO [server] update deactivate user account controller
+  // FIX [server] update deactivate user account controller
   // get the user credentials from DB:
   const v_get_user_credentials = await Model_UserData.findById(
     request.v_get_user_credentials._id
@@ -67,3 +67,5 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
 });
 
 export default f_control_deactivate_account;
+
+// TODO [server] set swagger docs for this API f_control_deactivate_account

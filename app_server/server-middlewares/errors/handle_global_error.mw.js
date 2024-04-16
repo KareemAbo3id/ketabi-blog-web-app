@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
  * Global server middleware function that handles returned error objects.
  */
 function f_handle_global_error(err, req, res, next) {
+  // FIX [server] global error handler middleware
   let v_errStatusCode =
     res.statusCode === StatusCodes.OK
       ? StatusCodes.INTERNAL_SERVER_ERROR
@@ -30,3 +31,5 @@ function f_handle_global_error(err, req, res, next) {
 }
 
 export default f_handle_global_error;
+
+// TODO [server] set swagger docs for this middleware f_handle_global_error

@@ -11,7 +11,7 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 
 import { V_PORT } from "./server-configs/set_server_port.cnfg.js";
-import swaggerDocs from "./server-api-docs/swagger_docs.js";
+import v_swagger_documentation from "./server-api-docs/swagger_documentation.js";
 import f_handle_global_error from "./server-middlewares/errors/handle_global_error.mw.js";
 import f_handle_not_found_error from "./server-middlewares/errors/handle_not_found_error.mw.js";
 import f_set_server_listen from "./server-configs/set_server_listen.cnfg.js";
@@ -34,7 +34,11 @@ const { UserPath, AppApiDocsPath } = f_get_endpoint_path();
 //*************************************
 
 // ROUTER CONFIGS:
-V_APP.use(AppApiDocsPath.ROOT, swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+V_APP.use(
+  AppApiDocsPath.ROOT,
+  swaggerUi.serve,
+  swaggerUi.setup(v_swagger_documentation)
+);
 V_APP.use(UserPath.ROOT, V_USER_ROUTER_GROUP);
 V_APP.use(V_ERROR404_ROUTER);
 //*************************************
