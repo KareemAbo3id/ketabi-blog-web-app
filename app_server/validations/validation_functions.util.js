@@ -1,3 +1,5 @@
+// IMPORTANT devided the validations into several files
+
 /**
  * ### Validate Email Address
  * Validate the email address by regex pattern.

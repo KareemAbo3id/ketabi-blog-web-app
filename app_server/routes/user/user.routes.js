@@ -1,6 +1,6 @@
 import express from "express";
-import f_get_endpoint_path from "../../server-helpers/get_endpoint_path.helper.js";
-import f_handle_protect_private_route from "../../server-middlewares/routes/handle_protect_private_route.mw.js";
+import f_utl_endpoint_path from "../../server-helpers/get_endpoint_path.helper.js";
+import f_mw_protect_private_route from "../../server-middlewares/routes/handle_protect_private_route.mw.js";
 import f_control_sign_in from "../../server-controllers/user/auth/sign_in.ctrl.js";
 import f_control_sign_up from "../../server-controllers/user/auth/sign_up.ctrl.js";
 import f_control_sign_out from "../../server-controllers/user/auth/sign_out.ctrl.js";
@@ -14,7 +14,7 @@ import f_control_forget_password from "../../server-controllers/user/auth/forget
 import f_control_reset_password from "../../server-controllers/user/auth/reset_password.ctrl.js";
 
 const V_USER_ROUTER_GROUP = express.Router(); // create express router
-const { UserPath, AuthPath, CheckpointPath } = f_get_endpoint_path();
+const { UserPath, AuthPath, CheckpointPath } = f_utl_endpoint_path();
 
 // PUBLIC ACCESS ENDPOINTS:
 
@@ -31,37 +31,37 @@ V_USER_ROUTER_GROUP.patch(AuthPath.ResetPassword, f_control_reset_password);
 // PRIVATE ACCESS ENDPOINTS:
 V_USER_ROUTER_GROUP.patch(
   CheckpointPath.DeactivateAccount,
-  f_handle_protect_private_route,
+  f_mw_protect_private_route,
   f_control_deactivate_account
 );
 
 V_USER_ROUTER_GROUP.patch(
   CheckpointPath.VerifyEmailAddress,
-  f_handle_protect_private_route,
+  f_mw_protect_private_route,
   f_control_verify_email_address
 );
 
 V_USER_ROUTER_GROUP.patch(
   CheckpointPath.ReactivateAccount,
-  f_handle_protect_private_route,
+  f_mw_protect_private_route,
   f_control_reactivate_account
 );
 
 V_USER_ROUTER_GROUP.get(
   UserPath.Profile,
-  f_handle_protect_private_route,
+  f_mw_protect_private_route,
   f_control_get_profile
 );
 
 V_USER_ROUTER_GROUP.patch(
   UserPath.UpdatePassword,
-  f_handle_protect_private_route,
+  f_mw_protect_private_route,
   f_control_update_password
 );
 
 V_USER_ROUTER_GROUP.put(
   UserPath.UpdateProfile,
-  f_handle_protect_private_route,
+  f_mw_protect_private_route,
   f_control_update_profile
 );
 

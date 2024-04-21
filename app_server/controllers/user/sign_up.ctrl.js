@@ -3,11 +3,11 @@ import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
-import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import f_set_verify_emailaddress_mail_template from "../../../server-templates/mail-templates-setters/action/set_verify_email_mail.temp.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
-import f_get_url_base from "../../../server-helpers/get_base_url.helper.js";
+import f_utl_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
   f_check_userCredentials,
   f_validate_email_address,
@@ -128,7 +128,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
     // 4. send welcome email to the new user, and a link to verify the email:
 
     // set verification link:
-    const V_BASE_URL = f_get_url_base(request);
+    const V_BASE_URL = f_utl_url_base(request);
     const V_VERIFICATION_LINK = `${V_BASE_URL}/user/checkpoint/verify-email-address/${v_newUserPayload._id}`;
 
     // set message fields:
@@ -152,7 +152,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
 
     // the result:
     response.status(StatusCodes.CREATED).json(
-      f_set_json_response(Message_UserCreated, {
+      f_utl_json_response(Message_UserCreated, {
         userCredentials:
           v_newUserPayload.m_get_user_credentials_without_password(),
       })

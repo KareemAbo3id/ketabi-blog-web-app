@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../server-data-models/user_data.model.js";
-import f_set_json_response from "../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../server-helpers/set_json_response.helper.js";
 
 /**
  * ### Update User Password - Control
@@ -51,7 +51,7 @@ const f_control_update_password = asyncHandler(
             // the result:
             response
               .status(StatusCodes.CREATED)
-              .json(f_set_json_response("user password has been updated"));
+              .json(f_utl_json_response("user password has been updated"));
           }
 
           // if new password match original:

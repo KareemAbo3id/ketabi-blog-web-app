@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
-import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 
 /**
  * ### Re-Activate User Account - Control
@@ -29,7 +29,7 @@ const f_control_reactivate_account = asyncHandler(async (request, response) => {
 
     // the result:
     response.status(StatusCodes.CREATED).json(
-      f_set_json_response("user account has been re-activated", {
+      f_utl_json_response("user account has been re-activated", {
         _id: v_get_user_credentials._id,
         data_isAccountActive: v_get_user_credentials.data_isAccountActive,
       })

@@ -7,7 +7,7 @@ const { Message_NotFoundRoute } = f_get_server_validation_messages();
  * ### Middleware function to handle not found errors.
  * A server middleware function that handles returned `404 Page Not Found` errors.
  */
-function f_middleware_not_found_error(request, response, next) {
+function f_mw_not_found_error(request, response, next) {
   const v_errMessage = Message_NotFoundRoute(request.originalUrl);
 
   response.status(StatusCodes.NOT_FOUND).json({
@@ -17,4 +17,4 @@ function f_middleware_not_found_error(request, response, next) {
   next();
 }
 
-export default f_middleware_not_found_error;
+export default f_mw_not_found_error;

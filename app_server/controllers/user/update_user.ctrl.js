@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../server-data-models/user_data.model.js";
-import f_set_json_response from "../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../server-helpers/set_json_response.helper.js";
 
 /**
  * ### Update User Profile - Control
@@ -38,7 +38,7 @@ const f_control_update_profile = asyncHandler(async (request, response) => {
     // the result:
     response
       .status(StatusCodes.CREATED)
-      .json(f_set_json_response("user account info has been updated"));
+      .json(f_utl_json_response("user account info has been updated"));
   }
 
   // if user not found in DB:

@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
-import f_set_json_response from "../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../server-helpers/set_json_response.helper.js";
 
 /**
  * ### Get User Profile - Control
@@ -21,7 +21,7 @@ const f_control_get_profile = asyncHandler(async (request, response) => {
   if (v_loggedInUserCredentials.data_isAccountActive === true) {
     // the result:
     response.status(StatusCodes.OK).json(
-      f_set_json_response("user profile has been retrieved", {
+      f_utl_json_response("user profile has been retrieved", {
         profile: v_loggedInUserCredentials,
       })
     );

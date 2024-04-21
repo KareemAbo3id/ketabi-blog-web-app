@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
-import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import { f_check_userCredentials } from "../../../server-helpers/server_validation_funcs.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
@@ -70,7 +70,7 @@ const f_control_verify_email_address = asyncHandler(
 
       // the result:
       response.status(StatusCodes.CREATED).json(
-        f_set_json_response(Message_EmailVerified, {
+        f_utl_json_response(Message_EmailVerified, {
           FLAG_EMAIL_VERFIED: v_get_user_credentials.FLAG_EMAIL_VERFIED,
         })
       );

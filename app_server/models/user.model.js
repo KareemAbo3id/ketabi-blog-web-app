@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import f_get_db_structure from "../server-helpers/get_db_structure.helper.js";
+import f_utl_db_structure from "../server-helpers/get_db_structure.helper.js";
 import Schema_UserData from "../server-data-schema/user_data.schema.js";
 
-const { users_collection } = f_get_db_structure();
+const { users_collection } = f_utl_db_structure();
 
 // Encrypt password using bcrypt:
 Schema_UserData.pre("save", async function (next) {

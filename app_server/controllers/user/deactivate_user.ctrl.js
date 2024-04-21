@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_delete_httponly_cookie from "../../../server-services/cookies/delete_httponly_cookie.service.js";
-import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
 import { f_validate_password } from "../../../server-helpers/server_validation_funcs.helper.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
@@ -101,7 +101,7 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
   response
     .status(StatusCodes.CREATED)
     .json(
-      f_set_json_response(
+      f_utl_json_response(
         `(@${v_get_user_credentials.DATA_USERNAME}) ${Message_UserDeactivated}`
       )
     );

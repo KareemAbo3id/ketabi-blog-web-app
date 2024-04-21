@@ -1,3 +1,5 @@
+// IMPORTANT devide the messages into several files by category
+
 /**
  * ### Get server validation messages
  */

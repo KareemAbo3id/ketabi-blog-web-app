@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { StatusCodes } from "http-status-codes";
-import f_set_json_response from "../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../server-helpers/server_validation_messages.helper.js";
 
 const { Message_TransactionalEmailFailed, Message_TransactionalEmailSuccess } =
@@ -40,7 +40,7 @@ function f_send_transactional_email(p_mailFields, p_response) {
   transporter.sendMail(message, (error, info) => {
     if (error) {
       p_response.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
-        f_set_json_response(Message_TransactionalEmailFailed, {
+        f_utl_json_response(Message_TransactionalEmailFailed, {
           error: error,
         })
       );
@@ -48,7 +48,7 @@ function f_send_transactional_email(p_mailFields, p_response) {
     //
     else {
       p_response.status(StatusCodes.OK).json(
-        f_set_json_response(Message_TransactionalEmailSuccess, {
+        f_utl_json_response(Message_TransactionalEmailSuccess, {
           email_info: info,
         })
       );

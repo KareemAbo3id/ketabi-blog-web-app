@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import Model_UserData from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
-import f_set_json_response from "../../../server-helpers/set_json_response.helper.js";
+import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 import f_set_loggedin_mail_template from "../../../server-templates/mail-templates-setters/inform/set_loggedin_mail.temp.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
@@ -122,7 +122,7 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
     response
       .status(StatusCodes.OK)
       .json(
-        f_set_json_response(
+        f_utl_json_response(
           `(@${v_get_user_credentials.DATA_USERNAME}) ${Message_UserLoggedIn}`
         )
       );
