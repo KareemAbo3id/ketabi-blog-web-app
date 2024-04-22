@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../../server-data-models/user_data.model.js";
+import Model_User from "../../../server-data-models/user_data.model.js";
 import f_delete_httponly_cookie from "../../../server-services/cookies/delete_httponly_cookie.service.js";
 import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
@@ -49,7 +49,7 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
   }
 
   // 4. find user credentials in DB:
-  const v_get_user_credentials = await Model_UserData.findOne({
+  const v_get_user_credentials = await Model_User.findOne({
     DATA_USERNAME,
   }).select("+DATA_PASSWORD");
 

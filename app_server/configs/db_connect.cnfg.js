@@ -1,31 +1,13 @@
-import mongoose from "mongoose";
+import f_cnfg_db_connection_setup from "./db_connection_setup.cnfg";
 
 /**
- * ### Establishes a connection to the MongoDB database.
- * @param {string} p_mongodb_uri - The MongoDB connection URI.
+ * ### Configures the database connection based on the server environment.
+ * @moduletype Configration
  */
-async function f_set_db_connect(p_mongodb_uri) {
-  try {
-    const v_db_connect = await mongoose.connect(p_mongodb_uri.toString());
-    const v_app_db_host = v_db_connect.connection.host;
-    console.log(`SUCCESS: DB connection updated on host: ${v_app_db_host}\n`);
-  } catch (error) {
-    console.error(`FAIL: DB error: ${error.message}\n`);
-    // eslint-disable-next-line no-undef
-    process.exit(1);
-  }
+function f_cnfg_db_connect() {
+  process.env.V_ENV_SERVER_ENV === "development"
+    ? f_cnfg_db_connection_setup(process.env.V_ENV_MONGODB_TEST_DB_URI)
+    : f_cnfg_db_connection_setup(process.env.V_ENV_MONGODB_REAL_DB_URI);
 }
 
-/**
- * ### Configures the database connection based on the environment.
- */
-const f_configer_db_connect = () => {
-  // eslint-disable-next-line no-undef
-  process.env.V_EXPRESS_SERVER_ENV === "development"
-    ? // eslint-disable-next-line no-undef
-      f_set_db_connect(process.env.V_MONGODB_TEST_DB_URI)
-    : // eslint-disable-next-line no-undef
-      f_set_db_connect(process.env.V_MONGODB_REAL_DB_URI);
-};
-
-export default f_configer_db_connect;
+export default f_cnfg_db_connect;

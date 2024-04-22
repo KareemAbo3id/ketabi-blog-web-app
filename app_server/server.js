@@ -2,6 +2,7 @@
  * ### Ketabi Web Application Server
  * @fileoverview This file contains the server configuration and setup for `Ketabi` web application.
  * It imports necessary packages and modules, configures the server, sets up routes, and starts the server.
+ *
  * @KareemAbo3id
  *
  * #### General Naming:
@@ -15,51 +16,46 @@
  * v_mw : for middlewares.
  * v_cnfg : for configurations.
  * v_rtr : for routers.
- * v_mdl : for models.
- * v_sche : for schemas.
  * v_utl : for utilities.
+ * v_doc : for documentation.
  */
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { V_PORT } from "./configs/server_port.cnfg.js";
-import f_set_swagger_setup from "./api-docs/swagger_setup.js";
-import v_swagger_documentation from "./api-docs/swagger_documentation.js";
-import f_mw_handle_global_error from "./middlewares/global_error.mw.js";
+import { v_port } from "./configs/port.cnfg.js";
+import f_cnfg_swagger_setup from "./configs/swagger_setup.cnfg.js";
+import v_swagger_docs from "./documentation/swagger_docs.doc.js";
+import f_mw_global_error_handler from "./middlewares/global_error.mw.js";
 import f_mw_not_found_error from "./middlewares/not_found_error.mw.js";
 import f_cnfg_server_listen from "./configs/server_listen.cnfg.js";
 import f_utl_endpoint_path from "./utilities/endpoint_path.util.js";
 import V_USER_ROUTER_GROUP from "./server-routes/user/user_router.routes.js";
 import V_ERROR404_ROUTER from "./server-routes/error404/error404_router.routes.js";
-import f_configer_db_connect from "./server-configs/set_db_connect.cnfg.js";
+import f_cnfg_db_connect from "./server-configs/set_db_connect.cnfg.js";
 
-const V_APP = express();
+const v_app = express();
 dotenv.config();
-f_configer_db_connect();
-V_APP.use(cors());
-V_APP.use(express.json());
-V_APP.use(express.urlencoded({ extended: true }));
-V_APP.use(cookieParser());
-//*************************************
+f_cnfg_db_connect();
+v_app.use(cors());
+v_app.use(express.json());
+v_app.use(express.urlencoded({ extended: true }));
+v_app.use(cookieParser());
 
 // APP SERVER ROUTES CONFIGS:
 const { UserPath, AppApiDocsPath } = f_utl_endpoint_path();
-//*************************************
 
 // ROUTER CONFIGS:
-f_set_swagger_setup(V_APP, AppApiDocsPath.ROOT, v_swagger_documentation);
-V_APP.use(UserPath.ROOT, V_USER_ROUTER_GROUP);
-V_APP.use(V_ERROR404_ROUTER);
-//*************************************
+f_cnfg_swagger_setup(v_app, AppApiDocsPath.ROOT, v_swagger_docs);
+v_app.use(UserPath.ROOT, V_USER_ROUTER_GROUP);
+v_app.use(V_ERROR404_ROUTER);
 
 // MIDDLEWARES CONFIGS:
-V_APP.use(f_mw_handle_global_error);
-V_APP.use(f_mw_not_found_error);
-//*************************************
+v_app.use(f_mw_global_error_handler);
+v_app.use(f_mw_not_found_error);
 
 // SERVER LISTEN CONFIGS:
-f_cnfg_server_listen(V_APP, V_PORT);
-//*************************************
+f_cnfg_server_listen(v_app, v_port);
+
+

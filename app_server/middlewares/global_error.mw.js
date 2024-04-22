@@ -2,9 +2,11 @@ import { StatusCodes } from "http-status-codes";
 
 /**
  * ### Global Error Handler Middleware
- * Global server middleware function that handles returned error objects.
+ * @moduletype Middleware
+ *
+ * @returns {Function} Calls the next middleware.
  */
-function f_mw_handle_global_error(err, req, res, next) {
+function f_mw_global_error_handler(err, req, res, next) {
   // FIX [server] global error handler middleware
   let v_errStatusCode =
     res.statusCode === StatusCodes.OK
@@ -30,6 +32,4 @@ function f_mw_handle_global_error(err, req, res, next) {
   next();
 }
 
-export default f_mw_handle_global_error;
-
-// TODO [server] set swagger docs for this middleware f_mw_handle_global_error
+export default f_mw_global_error_handler;

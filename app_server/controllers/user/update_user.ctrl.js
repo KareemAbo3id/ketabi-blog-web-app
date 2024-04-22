@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../server-data-models/user_data.model.js";
+import Model_User from "../../server-data-models/user_data.model.js";
 import f_utl_json_response from "../../server-helpers/set_json_response.helper.js";
 
 /**
@@ -14,7 +14,7 @@ const f_control_update_profile = asyncHandler(async (request, response) => {
   // FIX [server] update user profile controller
 
   // get the user credentials from DB:
-  const v_get_user_credentials = await Model_UserData.findById(
+  const v_get_user_credentials = await Model_User.findById(
     request.v_get_user_credentials._id
   );
 

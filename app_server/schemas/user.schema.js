@@ -14,7 +14,7 @@ import mongoose from "mongoose";
  * @property {Boolean} FLAG_EMAIL_VERFIED
  * @property {Boolean} FLAG_ACCOUNT_ACTIVATED
  */
-const Schema_UserData = mongoose.Schema(
+const Schema_User = mongoose.Schema(
   {
     //
     //
@@ -22,7 +22,6 @@ const Schema_UserData = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 255,
       unique: true,
     },
     //
@@ -31,7 +30,6 @@ const Schema_UserData = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 255,
       unique: true,
     },
     //
@@ -46,7 +44,6 @@ const Schema_UserData = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 255,
     },
     //
     //
@@ -54,7 +51,6 @@ const Schema_UserData = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 255,
     },
     //
     //
@@ -65,14 +61,12 @@ const Schema_UserData = mongoose.Schema(
         COUNTRY: {
           type: String,
           trim: true,
-          maxLength: 255,
         },
         //
         //
         CITY: {
           type: String,
           trim: true,
-          maxLength: 255,
         },
       },
     ],
@@ -101,7 +95,6 @@ const Schema_UserData = mongoose.Schema(
     DATA_DEACTIVATION_REASON: {
       type: String,
       trim: true,
-      maxLength: 255,
     },
     //
     //
@@ -122,4 +115,4 @@ const Schema_UserData = mongoose.Schema(
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-export default Schema_UserData;
+export default Schema_User;

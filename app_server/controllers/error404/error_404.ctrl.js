@@ -16,15 +16,16 @@ const f_control_error_404 = asyncHandler(async (request, response) => {
   const V_BASE_URL = f_utl_url_base(request);
   const v_fullUrl = `${V_BASE_URL}${request.originalUrl}`;
 
+  console.log(V_BASE_URL);
   console.log(v_fullUrl);
 
-  response.status(StatusCodes.NOT_FOUND).json(
-    f_utl_json_response("Error Not Found: page not found.", [
-      {
-        request_url: v_fullUrl,
-      },
-    ])
-  );
+  // response.status(StatusCodes.NOT_FOUND).json(
+  //   f_utl_json_response("Error Not Found: page not found.", [
+  //     {
+  //       request_url: v_fullUrl,
+  //     },
+  //   ])
+  // );
 });
 
 export default f_control_error_404;

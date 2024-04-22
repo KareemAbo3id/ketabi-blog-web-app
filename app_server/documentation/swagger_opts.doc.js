@@ -1,5 +1,7 @@
-import swaggerJsDoc from "swagger-jsdoc";
-
+/**
+ * Swagger options for API documentation.
+ * @moduletype Documentation
+ */
 const v_swagger_options = {
   swaggerDefinition: {
     openapi: "3.0.1",
@@ -22,9 +24,4 @@ const v_swagger_options = {
   apis: ["./app_server/server-controllers/**/*.js"],
 };
 
-/**
- * Swagger documentation object.
- */
-const v_swagger_documentation = swaggerJsDoc(v_swagger_options);
-
-export default v_swagger_documentation;
+export default v_swagger_options;

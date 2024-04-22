@@ -1,13 +1,15 @@
 /**
- * ### Sets the server to listen on the specified port.
+ * ### Starts the server and listens on the specified port.
+ * @moduletype Configration
  *
- * @param {Object} p_app_server - The application server object.
- * @param {number} p_app_port - The port number to listen on.
+ * @param {object} p_app The Express application object.
+ * @param {number} p_port The port number to listen on.
+ * @returns {function} An Express instance listen method.
  */
-function f_cnfg_server_listen(p_app_server, p_app_port) {
-  p_app_server.listen(p_app_port, () => {
+function f_cnfg_server_listen(p_app, p_port) {
+  p_app.listen(p_port, () => {
     try {
-      console.log(`\nSUCCESS: server updated on port: ${p_app_port}`);
+      console.log(`\nSUCCESS: server listen on: ${p_port}`);
     } catch (error) {
       console.error(`\nFAIL: server error: ${error.message}`);
     }

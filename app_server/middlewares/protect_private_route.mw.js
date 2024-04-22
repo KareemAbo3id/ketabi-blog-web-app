@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../server-data-models/user_data.model.js";
+import Model_User from "../../server-data-models/user_data.model.js";
 
 /**
  * ### Protect Private Routers Handler Middleware
@@ -22,7 +22,7 @@ const f_mw_protect_private_route = asyncHandler(async (req, res, next) => {
         process.env.V_JWT_SECRET
       );
 
-      req.v_get_user_credentials = await Model_UserData.findById(
+      req.v_get_user_credentials = await Model_User.findById(
         v_decodedUserCredentials._id
       ).select("-DATA_PASSWORD");
 

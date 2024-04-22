@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
-import Model_UserData from "../../../server-data-models/user_data.model.js";
+import Model_User from "../../../server-data-models/user_data.model.js";
 import f_set_httponly_cookie from "../../../server-services/cookies/set_httponly_cookie.service.js";
 import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
@@ -73,12 +73,12 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   }
 
   // find user credentials in DB, by email:
-  const v_get_user_credentials_email = await Model_UserData.findOne({
+  const v_get_user_credentials_email = await Model_User.findOne({
     DATA_EMAIL_ADDRESS,
   });
 
   // find user credentials in DB, by username:
-  const v_get_user_credentials_username = await Model_UserData.findOne({
+  const v_get_user_credentials_username = await Model_User.findOne({
     DATA_USERNAME,
   });
 
@@ -98,7 +98,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   //  check if user credentials are unique and valid, then create new user:
 
   // create new user payload:
-  const v_newUserPayload = await Model_UserData.create({
+  const v_newUserPayload = await Model_User.create({
     DATA_EMAIL_ADDRESS,
     DATA_USERNAME,
     DATA_PASSWORD,
