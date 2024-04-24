@@ -10,7 +10,7 @@ import f_get_server_validation_messages from "../../../server-helpers/server_val
 import {
   f_check_userCredentials,
   f_validate_email_address,
-  f_validate_password,
+  f_vld_password_validator,
 } from "../../../server-helpers/server_validation_funcs.helper.js";
 
 const {
@@ -43,7 +43,7 @@ const f_control_sign_in = asyncHandler(async (request, response) => {
   }
 
   // check password conditions:
-  if (f_validate_password(DATA_PASSWORD)) {
+  if (f_vld_password_validator(DATA_PASSWORD)) {
     response.status(StatusCodes.BAD_REQUEST);
     throw new Error(Message_PasswordNotValid);
   }

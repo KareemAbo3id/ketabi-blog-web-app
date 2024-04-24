@@ -10,9 +10,6 @@ function f_utl_endpoint_path() {
     /** `/` */
     ROOT: "/",
 
-    /** `*` */
-    ERROR: "*",
-
     /** `/user` */
     USER: "/user",
 
@@ -77,7 +74,6 @@ function f_utl_endpoint_path() {
     AppApiDocsPath,
 
     /** `ROOT: "/"`
-     * `ERROR: "*"`
      * `USER: "/user"`
      * `CHECKPOINT: "/checkpoint"`
      * `AUTH: "/auth` */

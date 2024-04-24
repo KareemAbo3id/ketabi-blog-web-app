@@ -11,7 +11,7 @@ import f_utl_url_base from "../../../server-helpers/get_base_url.helper.js";
 import {
   f_check_userCredentials,
   f_validate_email_address,
-  f_validate_password,
+  f_vld_password_validator,
   f_validate_username,
 } from "../../../server-helpers/server_validation_funcs.helper.js";
 
@@ -55,7 +55,7 @@ const f_control_sign_up = asyncHandler(async (request, response) => {
   }
 
   // check username conditions:
-  if (f_validate_password(DATA_PASSWORD)) {
+  if (f_vld_password_validator(DATA_PASSWORD)) {
     response.status(StatusCodes.BAD_REQUEST);
     throw new Error(Message_PasswordNotValid);
   }

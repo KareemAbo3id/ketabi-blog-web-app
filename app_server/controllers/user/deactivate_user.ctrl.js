@@ -5,7 +5,7 @@ import Model_User from "../../../server-data-models/user_data.model.js";
 import f_delete_httponly_cookie from "../../../server-services/cookies/delete_httponly_cookie.service.js";
 import f_utl_json_response from "../../../server-helpers/set_json_response.helper.js";
 import f_get_server_validation_messages from "../../../server-helpers/server_validation_messages.helper.js";
-import { f_validate_password } from "../../../server-helpers/server_validation_funcs.helper.js";
+import { f_vld_password_validator } from "../../../server-helpers/server_validation_funcs.helper.js";
 import f_send_transactional_email from "../../../server-services/mailing/send_transactional_email.service.js";
 import f_set_account_deactivated_mail_template from "../../../server-templates/mail-templates-setters/inform/set_account_deactivated_mail.temp.js";
 
@@ -16,18 +16,19 @@ const {
 } = f_get_server_validation_messages();
 
 /**
- * ### Controller function to deactivate a user account.
+ * ### Deactivate User Account Controller
+ * @moduletype Controller
  *
  * @link `/user/checkpoint/deactivate-account/{DATA_USERNAME}`
  * @method PATCH
  * @access private
  */
-const f_control_deactivate_account = asyncHandler(async (request, response) => {
+const f_ctrl_deactivate_user = asyncHandler(async (request, response) => {
   //
   // 1. get `DATA_USERNAME` from request params:
   const { DATA_USERNAME } = request.params;
 
-  // 2. get required data from request body: (DATA_TYPED_DEACTIVATION_REASON is optional)
+  // 2. get required data from request body:
   const {
     DATA_TYPED_DEACTIVATION_REASON,
     DATA_TYPED_PASSWORD,
@@ -37,7 +38,9 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
   // 3. SERVER VALIDATION:
 
   // check password conditions:
-  if (f_validate_password(DATA_TYPED_PASSWORD || DATA_CONFIRM_TYPED_PASSWORD)) {
+  if (
+    f_vld_password_validator(DATA_TYPED_PASSWORD || DATA_CONFIRM_TYPED_PASSWORD)
+  ) {
     response.status(StatusCodes.BAD_REQUEST);
     throw new Error(Message_PasswordNotValid);
   }
@@ -107,7 +110,7 @@ const f_control_deactivate_account = asyncHandler(async (request, response) => {
     );
 });
 
-export default f_control_deactivate_account;
+export default f_ctrl_deactivate_user;
 
 /**
  * @swagger

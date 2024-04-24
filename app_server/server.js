@@ -18,6 +18,7 @@
  * v_rtr : for routers.
  * v_utl : for utilities.
  * v_doc : for documentation.
+ * v_vld : for validations.
  */
 import express from "express";
 import dotenv from "dotenv";
@@ -32,7 +33,6 @@ import f_mw_not_found_error from "./middlewares/not_found_error.mw.js";
 import f_cnfg_server_listen from "./configs/server_listen.cnfg.js";
 import f_utl_endpoint_path from "./utilities/endpoint_path.util.js";
 import V_USER_ROUTER_GROUP from "./server-routes/user/user_router.routes.js";
-import V_ERROR404_ROUTER from "./server-routes/error404/error404_router.routes.js";
 import f_cnfg_db_connect from "./server-configs/set_db_connect.cnfg.js";
 
 const v_app = express();
@@ -49,7 +49,6 @@ const { UserPath, AppApiDocsPath } = f_utl_endpoint_path();
 // ROUTER CONFIGS:
 f_cnfg_swagger_setup(v_app, AppApiDocsPath.ROOT, v_swagger_docs);
 v_app.use(UserPath.ROOT, V_USER_ROUTER_GROUP);
-v_app.use(V_ERROR404_ROUTER);
 
 // MIDDLEWARES CONFIGS:
 v_app.use(f_mw_global_error_handler);
@@ -57,5 +56,3 @@ v_app.use(f_mw_not_found_error);
 
 // SERVER LISTEN CONFIGS:
 f_cnfg_server_listen(v_app, v_port);
-
-

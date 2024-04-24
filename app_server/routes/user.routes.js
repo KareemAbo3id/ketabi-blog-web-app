@@ -4,7 +4,7 @@ import f_mw_protect_private_route from "../../server-middlewares/routes/handle_p
 import f_control_sign_in from "../../server-controllers/user/auth/sign_in.ctrl.js";
 import f_control_sign_up from "../../server-controllers/user/auth/sign_up.ctrl.js";
 import f_control_sign_out from "../../server-controllers/user/auth/sign_out.ctrl.js";
-import f_control_deactivate_account from "../../server-controllers/user/checkpoint/deactivate_account.ctrl.js";
+import f_ctrl_deactivate_user from "../../server-controllers/user/checkpoint/deactivate_account.ctrl.js";
 import f_control_reactivate_account from "../../server-controllers/user/checkpoint/reactivate_account.ctrl.js";
 import f_control_verify_email_address from "../../server-controllers/user/checkpoint/verify_email_address.ctrl.js";
 import f_control_get_profile from "../../server-controllers/user/get_profile.ctrl.js";
@@ -32,7 +32,7 @@ V_USER_ROUTER_GROUP.patch(AuthPath.ResetPassword, f_control_reset_password);
 V_USER_ROUTER_GROUP.patch(
   CheckpointPath.DeactivateAccount,
   f_mw_protect_private_route,
-  f_control_deactivate_account
+  f_ctrl_deactivate_user
 );
 
 V_USER_ROUTER_GROUP.patch(

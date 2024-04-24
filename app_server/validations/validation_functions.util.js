@@ -17,25 +17,6 @@ const f_validate_email_address = (p_emailAddress) => {
 };
 
 /**
- * ### Validate Password
- * Validate the password by length and regex pattern.
- * @param {String} p_password
- */
-const f_validate_password = (p_password) => {
-  let passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-  let passMin = 8;
-  let passMax = 30;
-  if (
-    p_password.length < passMin ||
-    p_password.length > passMax ||
-    !p_password.match(passRegex) ||
-    !p_password
-  ) {
-    return true;
-  }
-};
-
-/**
  * ### Validate Username
  * Validate the username by length.
  * @param {String} p_username
@@ -66,7 +47,6 @@ const f_check_userCredentials = (p_userCredentials) => {
 // export the functions:
 export {
   f_validate_email_address,
-  f_validate_password,
   f_validate_username,
   f_check_userCredentials,
 };
